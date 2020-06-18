@@ -24,7 +24,8 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  // publicPath: '/',
+  publicPath: '/test/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -49,9 +50,10 @@ module.exports = {
     }
   },
   chainWebpack(config) {
+    // 内联要关掉 preload 和 prefetch，否则index.html会引入请求runtimeChunk的preload link
+    // 参考issues https://github.com/PanJiaChen/vue-element-admin/issues/2690
     // it can improve the speed of the first screen, it is recommended to turn on preload
-    // config.plugins.delete('preload')
-
+    config.plugins.delete('preload')
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 

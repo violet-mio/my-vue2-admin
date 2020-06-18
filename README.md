@@ -8,7 +8,9 @@
 
 - [x] Pagination分页模块
 
+- [x]  部署时子域名更改为publicPath: '/test/',
 
+- [x] 修改babel配置，解决模块混用问题
 
 ## 启动
 
