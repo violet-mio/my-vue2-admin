@@ -70,12 +70,28 @@ Vue.use(TableColumn)
 Vue.use(Tag)
 Vue.use(Tree)
 
-Vue.use(Loading.directive)
+// Vue.use(Loading.directive)
 
-Vue.prototype.$loading = Loading.service
-Vue.prototype.$msgbox = MessageBox
-Vue.prototype.$alert = MessageBox.alert
-Vue.prototype.$confirm = MessageBox.confirm
-Vue.prototype.$prompt = MessageBox.prompt
+// Vue.prototype.$loading = Loading.service
+// Vue.prototype.$msgbox = MessageBox
+// Vue.prototype.$alert = MessageBox.alert
+// Vue.prototype.$confirm = MessageBox.confirm
+// Vue.prototype.$prompt = MessageBox.prompt
+// Vue.prototype.$notify = Notification
+// Vue.prototype.$message = Message
+
+// 修复elementui按需引入导致莫名奇妙的bug fix bug https://github.com/ElementUI/babel-plugin-component/issues/31
+const _Loading = Loading
+const { directive: loadingDirective, service: loadingService } = _Loading
+const _MessageBox = MessageBox
+const { alert, confirm, prompt } = _MessageBox
+
+Vue.use(loadingDirective)
+
+Vue.prototype.$loading = loadingService
+Vue.prototype.$msgbox = _MessageBox
+Vue.prototype.$alert = alert
+Vue.prototype.$confirm = confirm
+Vue.prototype.$prompt = prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message

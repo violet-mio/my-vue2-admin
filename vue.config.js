@@ -24,7 +24,7 @@ module.exports = {
    * 更多参考 https://cli.vuejs.org/config/#publicpath
   */
   // publicPath: '/',
-  publicPath: '/test/',
+  publicPath: '/',
 
   // 构建文件的存放目录
   outputDir: 'dist',
@@ -42,7 +42,7 @@ module.exports = {
     // 端口地址
     port: port,
     // 是否自动自动打开浏览器
-    open: true,
+    // open: true,
 
     // 浏览器同时显示警告和错误
     overlay: {
@@ -125,17 +125,23 @@ module.exports = {
                   name: 'chunk-libs',
                   test: /[\\/]node_modules[\\/]/,
                   priority: 10,
-                  chunks: 'initial' // 只打包初始时所依赖的第三方
+                  // 只打包初始时所依赖的第三方
+                  chunks: 'initial'
                 },
                 elementUI: {
-                  name: 'chunk-elementUI', // 将elementui拆分到一个单独的包中
-                  priority: 20, // 权重要大于 libs 和 app, 不然会被打包进 libs 或者 app
-                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // 为了适配cnpm
+                  // 将elementui拆分到一个单独的包中
+                  name: 'chunk-elementUI',
+                  // 权重要大于 libs 和 app, 不然会被打包进 libs 或者 app
+                  priority: 20, 
+                  // 为了适配cnpm
+                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ 
                 },
                 commons: {
                   name: 'chunk-commons',
-                  test: resolve('src/components'), // 可自定义拓展你的规则
-                  minChunks: 3, // 最小共用次数
+                  // 可自定义拓展你的规则
+                  test: resolve('src/components'),
+                  // 最小共用次数
+                  minChunks: 3,
                   priority: 5,
                   reuseExistingChunk: true
                 }
