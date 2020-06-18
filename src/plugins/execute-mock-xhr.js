@@ -4,7 +4,7 @@
  */
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('user mock at production env');
+  console.log('user mock at production env')
   const { mockXHR } = require('../../mock')
   mockXHR()
 }

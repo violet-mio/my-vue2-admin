@@ -28,7 +28,7 @@ import {
   Table,
   TableColumn,
   Tag,
-  Tree,  
+  Tree,
   Loading,
   MessageBox,
   Notification,
