@@ -22,6 +22,8 @@ import Layout from '@/layout'
     icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    noCache: true                if set true, the page will no be cached(default is false)
+    affix: true                  if set true, the tag will affix in the tags-view
   }
  */
 
@@ -51,7 +53,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
     }]
   },
 
