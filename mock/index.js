@@ -36,7 +36,8 @@ function mockXHR() {
         result = respond({
           method: type,
           body: JSON.parse(body),
-          query: param2Obj(url)
+          query: param2Obj(url),
+          url
         })
       } else {
         result = respond

@@ -51,9 +51,20 @@ module.exports = {
     },
     // 代理设置，可以用于开发阶段处理跨域请求
     // proxy: {}
+    // proxy: {
+    //   // 匹配 / 的转发请求到 http://127.0.0.1:8888/
+    //   '/dev-api': {
+    //     target: 'http://127.0.0.1:9528', // 目标服务器
+    //     changeOrigin: true,
+    //     ws: false,
+    //     pathRewrite: {
+    //       ['^' + '/dev-api']: '' // 路径重写,去掉了 '/'
+    //     }
+    //   }
+    // },
     
-    // 使用mock数据
-    // before: require('./mock/mock-server.js')
+    // // 使用mock数据
+    // before: defaultSettings.isUseMock ? require('./mock/mock-server.js') : () =>{}
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

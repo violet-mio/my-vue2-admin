@@ -39,6 +39,16 @@
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="action" width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" @click="getDetail(scope.row.id)">获取详情</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="action" width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" @click="updateTableInfo(scope.row.id)">更新</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -46,7 +56,7 @@
 </template>
 
 <script>
-import { getTableList } from '@/api/table'
+import { getTableList, getTableDetail, updateTable } from '@/api/table'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -86,6 +96,25 @@ export default {
         this.listLoading = false
         console.log(response)
       })
+    },
+    getDetail(id) {
+      getTableDetail({ id }).then(res => {
+        console.log('获取详情成功')
+        console.log(res)
+      }).catch(res => {
+        console.log('获取详情失败')
+        console.log(res)
+      })
+    },
+    updateTableInfo(id) {
+      updateTable({ id }).then(res => {
+        console.log('更新详情成功')
+        console.log(res)
+      }).catch(res => {
+        console.log('更新详情失败')
+        console.log(res)
+      })
+
     }
   }
 }
