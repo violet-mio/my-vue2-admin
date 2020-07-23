@@ -1,28 +1,57 @@
 const Mock = require('mockjs')
+const { 
+  isEmpty
+} = require('./utils')
 
-const tableList = Mock.mock({
-  'items|30': [{
-    id: '@id',
-    title: '@sentence(10, 20)',
-    'status|1': ['published', 'draft', 'deleted'],
-    author: 'name',
-    display_time: '@datetime',
-    pageviews: '@integer(300, 5000)'
-  }]
-})
+const tableList = ((len) => {
+  const list = []
+  for (let i = 0; i < len; i++) {
+    list.push(Mock.mock({
+      id: '@increment',
+      title: '@sentence(10, 20)',
+      'status|1': [0, 1, 2],
+      author: 'author-@title(0, 2)',
+      display_time: '@datetime',
+      pageviews: '@integer(300, 5000)'
+    }))
+  }
+  return list
+})(count = 50);
 
 module.exports = [
   {
     // url: '/vue-admin-template/table/list',
+    // 表格列表
     url: /\/vue-admin-template\/table\/list[?].+/,
     type: 'get',
     response: config => {
-      const items = tableList.items
+
+      // 下面是获取列表
+      const { id, title, status, author, page, limit } = config.query
+      console.log({ id, title, status, author, page, limit })
+
+      // 条件筛选
+      let mockList = tableList.filter(item => {
+        if(!isEmpty(id) && item.id !== +id) return false
+        if(!isEmpty(title) && item.title !== title) return false
+        if(!isEmpty(author) && item.author !== author) return false
+        if(!isEmpty(status) && item.status !== +status) return false
+        return true
+      })
+
+      // 分页查询
+      const pageList = mockList.filter((item, index) => {
+        if( index < limit * page && index >= limit * (page -1) ) {
+          return true
+        }
+        return false
+      })
+
       return {
         code: 20000,
         data: {
-          total: items.length,
-          items: items
+          total: pageList.length,
+          items: pageList
         }
       }
     }
@@ -35,9 +64,7 @@ module.exports = [
       const id = config.url.split('/vue-admin-template/table/list/')[1] || ''
       console.log(`id => ${id}`)
       let detail = ''
-      const items = tableList.items
-
-      for(const item of items) {
+      for(const item of tableList) {
         if(+item.id === +id) {
           detail = item
         }
@@ -57,8 +84,7 @@ module.exports = [
       const id = config.url.split('/vue-admin-template/table/list/')[1]
       console.log(`id => ${id}`)
       let detail = null
-      const items = tableList.items
-      for(const item of items) {
+      for(const item of tableList) {
         if(+item.id === +id) {
           detail = item
         }

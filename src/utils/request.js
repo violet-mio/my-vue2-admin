@@ -3,6 +3,18 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
+const isDev = process.env.NODE_ENV !== 'production'
+
+const printSuccess = (url, isRequest = true, ...args) => {
+  const reqColor = 'orange'
+  const respColor = 'green'
+  console.log(`%c${url}${isRequest ? '-->' : '--<'}`, `background:#fff;color:${isRequest ? reqColor : respColor};`, ...args)
+}
+
+const printError = (url, ...args) => {
+  console.log(`%c${url}`, 'background:#000;color:pink;fontStyle;', ...args)
+}
+
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -21,11 +33,12 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
     }
+    isDev && printSuccess(config.url, true, { params: config.params || {}, query: config.query || {}, data: config.data || {} })
     return config
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    isDev && printError(`${error.config.url}, ERROR: ${error} ---->`)
     return Promise.reject(error)
   }
 )
@@ -66,13 +79,15 @@ service.interceptors.response.use(
           })
         })
       }
+      isDev && printError(`${response.config.url} CUSTOMER_ERROR_CODE: ${res.code}, ERROR_MESSAGE: ${res.message} ---->`)
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
+      isDev && printSuccess(response.config.url, false, response)
       return res
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    isDev && printError(`${error.config.url}, ERROR: ${error} ---->`)
     Message({
       message: error.message,
       type: 'error',

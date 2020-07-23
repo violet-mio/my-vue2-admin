@@ -2,8 +2,6 @@
 
 基于开源项目**vue-admin-template**的分支[permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)，根据自身需求，摘取[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)的部分功能模块
 
-
-
 - [x] tagsView模块: 快捷导航(标签栏导航)
 
 - [x] Pagination分页模块
@@ -56,11 +54,10 @@ npm run preview -- --report
 npm run lint
 
 # 代码格式检查并自动修复
-npm run lint -- --fix
+npm run lint:fix
 ```
 
 更多信息请参考 [使用文档](https://panjiachen.github.io/vue-element-admin-site/zh/)
-
 
 
 # vue-admin-template

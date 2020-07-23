@@ -63,7 +63,7 @@ module.exports = {
     //   }
     // },
     
-    // // 使用mock数据
+    // 使用mock数据
     // before: defaultSettings.isUseMock ? require('./mock/mock-server.js') : () =>{}
   },
   configureWebpack: {

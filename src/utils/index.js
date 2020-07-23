@@ -115,3 +115,21 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+/**
+ * @description 生成OptionList
+ * @param { object } status 英文键名和值的映射对象
+ * @param { object } statusMap 状态和中文的映射对象
+ * @returns { array } tempOptionsList 根据status和statusMap，返回一个生成好的新数组
+ * @example [{ id: 0, name: '正常' }, { id: 1, name: '保留' }, { id: 3, name: '删除' }]
+ */
+export function genOptionList(status, statusMap) {
+  const tempOptionsList = []
+  for (const key in status) {
+    const id = status[key]
+    const name = statusMap[id]
+    tempOptionsList.push({ id, name })
+  }
+  return tempOptionsList
+}
+

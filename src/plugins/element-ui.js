@@ -32,7 +32,8 @@ import {
   Loading,
   MessageBox,
   Notification,
-  Message
+  Message,
+  Row
 } from 'element-ui'
 
 // 设置语言
@@ -69,6 +70,7 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Tag)
 Vue.use(Tree)
+Vue.use(Row)
 
 // Vue.use(Loading.directive)
 

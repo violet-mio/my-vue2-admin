@@ -20,6 +20,34 @@ function param2Obj(url) {
   return obj
 }
 
+const isEmpty = v => {
+  if(typeof v === 'object') {
+    if(Array.isArray(v)) {
+      return v.length
+    } else {
+      return Object.keys(v).length
+    }
+  }
+  return v === undefined || v === null || v === ''
+}
+
+const parsePath = (url) => {
+  if(isEmpty(url)) {
+    return -1
+  }
+
+  let id = 1
+  id = (url.slice(url.lastIndexOf('/') + 1))
+  return id
+}
+
+const isNum = v => {
+  return !isNaN(v)
+}
+
 module.exports = {
-  param2Obj
+  param2Obj,
+  parsePath,
+  isEmpty,
+  isNum
 }
