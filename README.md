@@ -12,6 +12,8 @@
 
 - [x] 修改babel配置，解决模块混用问题
 
+- [x] 增加分支`no-tagsview`，不需要tagsview标签，可以使用该版本
+
 ## 启动
 
 ```bash

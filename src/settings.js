@@ -16,12 +16,7 @@ module.exports = {
    * @description Whether show the logo in sidebar
    */
   sidebarLogo: false,
-  
-  /**
-   * @type {boolean} true | false
-   * @description Whether need tagsView
-   */
-  tagsView: true,
+
   /**
    * @type {boolean} true | false
    * @description 是否使用mock, 只在开发环境使用
