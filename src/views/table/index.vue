@@ -113,11 +113,13 @@
 <script>
 import { getTableList, getTableDetail, updateTable } from '@/api/table'
 import Pagination from '@/components/Pagination'
+import Sticky from '@/components/Sticky'
 import { articleStatus, articleStatusMap, articleStatusOptions } from './options'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    Sticky
   },
   filters: {
     statusTagFilter(status) {
@@ -200,3 +202,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .query-navbar {
+    background: #fff;
+    margin-top: -20px;
+  }
+</style>
