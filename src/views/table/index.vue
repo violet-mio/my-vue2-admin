@@ -1,5 +1,60 @@
 <template>
   <div class="app-container">
+    <el-form :model="listQuery" ref="listQueryRef" :inline="true" label-width="68px">
+      <el-form-item label="ID" prop="id">
+        <el-input
+          v-model="listQuery.id"
+          placeholder="请输入ID"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="标题" prop="title">
+        <el-input
+          v-model="listQuery.title"
+          placeholder="请输入标题"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="listQuery.status" placeholder="文章状态" clearable>
+          <el-option
+            v-for="articleOptionsItem in articleStatusOptions"
+            :key="articleOptionsItem.id"
+            :label="articleOptionsItem.name"
+            :value="articleOptionsItem.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleAdd"
+        >新增</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          icon="el-icon-edit"
+          @click="handleUpdate"
+        >修改</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          icon="el-icon-download"
+          @click="handleExport"
+        >导出</el-button>
+      </el-col>
+    </el-row>
+
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -10,7 +65,7 @@
     >
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
       <el-table-column label="Title">
@@ -30,7 +85,7 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="Status" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status | statusTagFilter">{{ scope.row.status | statusTextFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Display_time" width="200">
@@ -58,19 +113,25 @@
 <script>
 import { getTableList, getTableDetail, updateTable } from '@/api/table'
 import Pagination from '@/components/Pagination'
+import Sticky from '@/components/Sticky'
+import { articleStatus, articleStatusMap, articleStatusOptions } from './options'
 
 export default {
   components: {
-    Pagination 
+    Pagination,
+    Sticky
   },
   filters: {
-    statusFilter(status) {
+    statusTagFilter(status) {
       const statusMap = {
         published: 'success',
         draft: 'gray',
         deleted: 'danger'
       }
       return statusMap[status]
+    },
+    statusTextFilter(status) {
+      return articleStatusMap[status]
     }
   },
   data() {
@@ -80,8 +141,13 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 20
-      }
+        limit: 20,
+        id: '',
+        title: '',
+        status: articleStatus.PUBLISHED,
+        author: undefined
+      },
+      articleStatusOptions
     }
   },
   created() {
@@ -114,8 +180,32 @@ export default {
         console.log('更新详情失败')
         console.log(res)
       })
-
-    }
+    },
+    handleSearch() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.$refs['listQueryRef'].resetFields()
+      this.handleSearch();
+    },
+    handleAdd() {
+      console.log('add')  
+    },
+    handleUpdate() {
+      console.log('Update')  
+    },
+    handleExport() {
+      console.log('Export')  
+    },
   }
 }
 </script>
+
+<style lang="scss">
+  .query-navbar {
+    background: #fff;
+    margin-top: -20px;
+  }
+</style>
