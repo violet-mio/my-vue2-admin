@@ -97,6 +97,11 @@ export default {
       loading: false
     }
   },
+  computed: {
+    genderLimitValConfig() {
+      return { oneVal: this.selectedSexLimit, OneTarget: genderLimitStatus.UNLIMIT, twoVal: this.checkedSexs }
+    }
+  },
   created() {
     if (this.isEdit) {
       const id = this.$route.query.id
@@ -120,11 +125,12 @@ export default {
         }
         const requestApi = this.isEdit ? updateGoods : createGoods
         const postFormCopy = _cloneDeep(this.postForm)
-        postFormCopy.gender = this.getSexLimitVal()
+        // postFormCopy.gender = this.getSexLimitVal()
+        postFormCopy.gender = this.getLimitVal(this.genderLimitValConfig)
         // TODO删除
         console.log(postFormCopy)
-        // this.hideLoading()
-        // return false
+        this.hideLoading()
+        return false
 
         const res = await requestApi(postFormCopy)
           .catch(() => {
@@ -145,15 +151,26 @@ export default {
       this.$router.back()
     },
     // 获取人群限定
-    getSexLimitVal() {
-      const limit = this.selectedSexLimit
-      if(limit === genderLimitStatus.UNLIMIT) {
-        return JSON.stringify([])
+    // getSexLimitVal() {
+    //   const limit = this.selectedSexLimit
+    //   if(limit === genderLimitStatus.UNLIMIT) {
+    //     return JSON.stringify([])
+    //   } else {
+    //     const mapper = {
+    //       [genderLimitStatus.LIMIT]: JSON.stringify([...this.checkedSexs])
+    //     }
+    //     return mapper[limit]
+    //   }
+    // },
+    getLimitVal(obj = { oneVal: '', OneTarget: '', twoVal: '', isToJSON: false }) {
+      const { oneVal, OneTarget, twoVal, isToJSON } = obj
+      // 一级选项值
+      // 判断一级值是否是指定的
+      // 数组类型
+      if(oneVal === OneTarget) {
+        return isToJSON ? JSON.stringify([]) : []
       } else {
-        const mapper = {
-          [genderLimitStatus.LIMIT]: JSON.stringify([...this.checkedSexs])
-        }
-        return mapper[limit]
+        return  isToJSON ? JSON.stringify([...twoVal]) : [...twoVal]
       }
     },
     setSexLimitVal(v) {
