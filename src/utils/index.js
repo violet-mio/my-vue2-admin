@@ -133,3 +133,14 @@ export function genOptionList(status, statusMap) {
   return tempOptionsList
 }
 
+// 空值
+export function isEmpty(v) {
+  if (typeof v === 'object') {
+    if (Array.isArray(v)) {
+      return v.length
+    } else {
+      return Object.keys(v).length
+    }
+  }
+  return v === undefined || v === null || v === ''
+}

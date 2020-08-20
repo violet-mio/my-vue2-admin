@@ -166,6 +166,32 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/goods',
+    component: Layout,
+    meta: { title: 'GOODS', icon: 'table' },
+    children: [
+      {
+        path: 'list',
+        name: 'GoodsList',
+        component: () => import('@/views/goods/index'),
+        meta: { title: 'GoodsList', icon: 'list' }
+      },
+      {
+        path: 'add',
+        name: 'AddGoods',
+        component: () => import('@/views/goods/add'),
+        meta: { title: 'AddGoods', icon: 'add', noCache: true }
+      },
+      {
+        path: 'edit',
+        name: 'EditGoods',
+        component: () => import('@/views/goods/edit'),
+        meta: { title: 'EditGoods', icon: 'edit', noCache: true },
+        hidden: true
+      },
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
