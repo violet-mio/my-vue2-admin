@@ -15,6 +15,21 @@ export function getGoodsDetail(id) {
   })
 }
 
+export function getBrandOptions() {
+  return request({
+    url: `/goods/brand/options`,
+    method: 'get'
+  })
+}
+
+export function getProductOptions(id) {
+  return request({
+    url: `/goods/product/options`,
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function createGoods(data) {
   return request({
     url: '/goods/list',

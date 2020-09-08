@@ -1,6 +1,7 @@
 const Mock = require('mockjs')
 const { 
-  isEmpty
+  isEmpty,
+  getArrRandomCount
 } = require('./utils')
 
 function genOneItem() {
@@ -20,6 +21,48 @@ const goodsList = ((len) => {
   }
   return list
 })(count = 5);
+
+const brandList = ['OBBO', 'WE', 'ME'].map((item, index) => {
+  return {
+    id: index + 1,
+    name: item
+  }
+})
+
+const brandProduct = [
+  {
+    id: 1,
+    name: '横幅'
+  },
+  {
+    id: 8,
+    name: '原生'
+  },
+  {
+    id: 16,
+    name: '信息流广告'
+  },
+  {
+    id: 32,
+    name: 'PMP'
+  },
+  {
+    id: 64,
+    name: '插屏'
+  },
+  {
+    id: 128,
+    name: '搜索直达'
+  }
+]
+
+const productList = brandList.map(item => {
+  return {
+    id: item.id,
+    name: item.name,
+    children: getArrRandomCount(brandProduct)
+  }
+})
 
 module.exports = [
   {
@@ -108,6 +151,38 @@ module.exports = [
       return {
         code: 20000,
         data: 'success'
+      }
+    }
+  },
+  {
+    // 品牌选项
+    url: /\/goods\/brand\/options/,
+    type: 'get',
+    response: () => {
+      return {
+        code: 20000,
+        data: {
+          list: brandList
+        }
+      }
+    }
+  },
+  {
+    // 产品选项
+    url: /\/goods\/product\/options/,
+    type: 'get',
+    response: config => {
+
+      // 下面是获取列表
+      const { id } = config.query
+      let productItem = {}
+      productItem = productList.find(item => item.id === +id)
+
+      return {
+        code: 20000,
+        data: {
+          list: Object.keys(productItem).length === 0 ? {} : productItem.children
+        }
       }
     }
   },

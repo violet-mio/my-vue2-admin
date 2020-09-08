@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="listQuery" ref="listQueryRef" :inline="true" label-width="68px">
+    <el-form ref="listQueryRef" :model="listQuery" :inline="true" label-width="68px">
       <el-form-item label="ID" prop="id">
         <el-input
           v-model="listQuery.id"
@@ -113,13 +113,13 @@
 <script>
 import { getTableList, getTableDetail, updateTable } from '@/api/table'
 import Pagination from '@/components/Pagination'
-import Sticky from '@/components/Sticky'
+// import Sticky from '@/components/Sticky'
 import { articleStatus, articleStatusMap, articleStatusOptions } from './options'
 
 export default {
   components: {
-    Pagination,
-    Sticky
+    Pagination
+    // Sticky
   },
   filters: {
     statusTagFilter(status) {
@@ -188,17 +188,17 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.$refs['listQueryRef'].resetFields()
-      this.handleSearch();
+      this.handleSearch()
     },
     handleAdd() {
-      console.log('add')  
+      console.log('add')
     },
     handleUpdate() {
-      console.log('Update')  
+      console.log('Update')
     },
     handleExport() {
-      console.log('Export')  
-    },
+      console.log('Export')
+    }
   }
 }
 </script>

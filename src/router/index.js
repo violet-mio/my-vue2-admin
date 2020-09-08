@@ -189,7 +189,7 @@ export const asyncRoutes = [
         component: () => import('@/views/goods/edit'),
         meta: { title: 'EditGoods', icon: 'edit', noCache: true },
         hidden: true
-      },
+      }
     ]
   },
 

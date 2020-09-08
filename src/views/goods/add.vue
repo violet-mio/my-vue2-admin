@@ -1,14 +1,14 @@
 <template>
   <div>
-    <EditDetail :is-edit="false" />
+    <EditGoodsDetail :is-edit="false" />
   </div>
 </template>
 <script>
-import EditDetail from './components/EditDetail'
+import EditGoodsDetail from './components/EditGoodsDetail'
 export default {
   name: 'AddGoods',
   components: {
-    EditDetail
+    EditGoodsDetail
   }
 }
 </script>

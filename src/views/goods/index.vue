@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="listQuery" ref="listQueryRef" :inline="true" label-width="68px">
+    <el-form ref="listQueryRef" :model="listQuery" :inline="true" label-width="68px">
       <el-form-item label="ID" prop="id">
         <el-input
           v-model="listQuery.id"
@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="Status" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag >{{ scope.row.status }}</el-tag>
+          <el-tag>{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Display_time" width="200">
@@ -91,7 +91,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        title: '',
+        title: ''
       }
     }
   },
@@ -113,15 +113,6 @@ export default {
         this.listLoading = false
       })
     },
-    getDetail(id) {
-      getTableDetail({ id }).then(res => {
-        console.log('获取详情成功')
-        console.log(res)
-      }).catch(res => {
-        console.log('获取详情失败')
-        console.log(res)
-      })
-    },
     handleSearch() {
       this.listQuery.page = 1
       this.getList()
@@ -129,15 +120,15 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.$refs['listQueryRef'].resetFields()
-      this.handleSearch();
+      this.handleSearch()
     },
     handleAdd() {
       console.log('add')
       this.$router.push({ name: 'AddGoods' })
     },
     handleEdit(id) {
-      this.$router.push({ name: 'EditGoods', query: { id } })
-    },
+      this.$router.push({ name: 'EditGoods', query: { id }})
+    }
   }
 }
 </script>

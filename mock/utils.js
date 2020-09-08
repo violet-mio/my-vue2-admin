@@ -45,9 +45,20 @@ const isNum = v => {
   return !isNaN(v)
 }
 
+const getArrRandomCount = (arr, len) => {
+  if(Array.isArray(arr)) {
+    const randomLen = Math.ceil(Math.random() * arr.length);
+    const tempArr = arr.slice(0, randomLen)
+    return tempArr
+  } else {
+    return []
+  }
+}
+
 module.exports = {
   param2Obj,
   parsePath,
   isEmpty,
-  isNum
+  isNum,
+  getArrRandomCount
 }
