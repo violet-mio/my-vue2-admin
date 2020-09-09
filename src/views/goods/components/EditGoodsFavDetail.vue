@@ -24,6 +24,7 @@
 const _cloneDeep = require('lodash/cloneDeep')
 import { getProductOptions } from '@/api/goods'
 import { isEmpty } from '@/utils'
+
 export default {
   name: 'EditGoodsFavDetail',
   props: {
@@ -41,14 +42,14 @@ export default {
         product: [
           { required: true, message: '请输入产品', trigger: 'blur' },
         ],
-        desc: [
-          { required: true, message: '请输入描述', trigger: 'blur' },
-          { min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur' }
-        ],
-        favorite: [
-          { required: true, message: '请输入喜好', trigger: 'blur' },
-          { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
-        ]
+        // desc: [
+        //   { required: true, message: '请输入描述', trigger: 'blur' },
+        //   { min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur' }
+        // ],
+        // favorite: [
+        //   { required: true, message: '请输入喜好', trigger: 'blur' },
+        //   { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
+        // ]
       }
     }
   },
@@ -58,16 +59,18 @@ export default {
     }
   },
   watch: {
-    brandId(newVal, oldVal) {
-      if(isEmpty(newVal)) return false
-      this.value.product = ''
-      this.getProductOptions(newVal)
-    }
-  },
-  created() {
-    if(this.isEdit) {
-      if(isEmpty(this.brandId)) return false
-      this.getProductOptions(this.brandId)
+    brandId: {
+      handler: function(newVal, oldVal) {
+        console.log('watch' , newVal, oldVal)
+        const isEmptyToVal = !isEmpty(newVal) && isEmpty(oldVal)
+        if(!(this.isEdit && isEmptyToVal)) {
+          this.value.product = ''
+        }
+        if(isEmpty(newVal)) return
+        console.log(isEmptyToVal)
+        this.getProductOptions(newVal)
+      },
+      immediate: true
     }
   },
   methods: {

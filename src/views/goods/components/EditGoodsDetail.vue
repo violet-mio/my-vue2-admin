@@ -110,7 +110,8 @@ export default {
       return new Promise((resolve, reject) => {
         getGoodsDetail(id).then(res => {
           const data = res.data
-          this.postForm = Object.assign(this.postForm, data)
+          this.postForm = data
+          // this.postForm = Object.assign(this.postForm, data)
           resolve(data)
         }).catch(err => {
           console.log(err)

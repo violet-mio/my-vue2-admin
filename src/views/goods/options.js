@@ -12,15 +12,17 @@ export const genderLimitStatusMap = {
 
 export const genderLimitStatusOptions = genOptionList(genderLimitStatus, genderLimitStatusMap)
 
-// 性别
-export const sexStatus = {
-  MALE: 1,
-  FEMALE: 2
+// 大小
+export const sizeStatus = {
+  MIDDLE: 1,
+  BIG: 2,
+  SUPERBIG: 3
 }
 
-export const sexStatusMap = {
-  [sexStatus.MALE]: '男性',
-  [sexStatus.FEMALE]: '女性'
+export const sizeStatusMap = {
+  [sizeStatus.MIDDLE]: '中杯',
+  [sizeStatus.BIG]: '大杯',
+  [sizeStatus.SUPERBIG]: '超大杯',
 }
 
-export const sexStatusOptions = genOptionList(sexStatus, sexStatusMap)
+export const sizeStatusOptions = genOptionList(sizeStatus, sizeStatusMap)
