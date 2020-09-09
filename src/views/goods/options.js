@@ -1,17 +1,5 @@
 import { genOptionList } from '@/utils/index'
 
-export const genderLimitStatus = {
-  UNLIMIT: 0,
-  LIMIT: 1
-}
-
-export const genderLimitStatusMap = {
-  [genderLimitStatus.UNLIMIT]: '不限',
-  [genderLimitStatus.LIMIT]: '限定'
-}
-
-export const genderLimitStatusOptions = genOptionList(genderLimitStatus, genderLimitStatusMap)
-
 // 大小
 export const sizeStatus = {
   MIDDLE: 1,
@@ -26,3 +14,29 @@ export const sizeStatusMap = {
 }
 
 export const sizeStatusOptions = genOptionList(sizeStatus, sizeStatusMap)
+
+// 人群性别限定
+export const sexLimitStatus = {
+  UNLIMIT: 0,
+  LIMIT: 1,
+}
+
+export const sexLimitStatusMap = {
+  [sexLimitStatus.UNLIMIT]: '不限定',
+  [sexLimitStatus.LIMIT]: '限定'
+}
+
+export const sexLimitStatusOptions = genOptionList(sexLimitStatus, sexLimitStatusMap)
+
+// 性别
+export const sexStatus = {
+  MALE: 1,
+  FEMALE: 2,
+}
+
+export const sexStatusMap = {
+  [sexStatus.MALE]: '男性',
+  [sexStatus.FEMALE]: '女性'
+}
+
+export const sexStatusOptions = genOptionList(sexStatus, sexStatusMap)

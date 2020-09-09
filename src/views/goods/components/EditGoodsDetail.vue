@@ -88,7 +88,7 @@ export default {
           // this.hideLoading()
           // return false
 
-          requestApi(postFormCopy)
+          requestApi(JSON.stringify(postFormCopy))
             .then(res => {
               this.$message.success(`${this.isEdit ? '编辑成功' : '新增成功'}`)
               this.$router.push({ name: 'GoodsList', query: { flush: true }})
@@ -111,6 +111,7 @@ export default {
         getGoodsDetail(id).then(res => {
           const data = res.data
           this.postForm = data
+          this.$refs.infoFormRef.initEdit && this.$refs.infoFormRef.initEdit()
           // this.postForm = Object.assign(this.postForm, data)
           resolve(data)
         }).catch(err => {

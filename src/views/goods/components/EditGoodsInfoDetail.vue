@@ -17,12 +17,35 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="人群限定">
+        <el-radio-group v-model="selectedSexLimit" @change="handleSexLimitChange">
+          <el-radio 
+            v-for="item in sexLimitStatusOptions" 
+            :key="item.id"
+            :label="item.id">
+            {{ item.name }}
+          </el-radio>
+        </el-radio-group>
+
+        <el-form-item v-show="selectedSexLimit === sexLimitStatus.LIMIT" prop="gender" label-width="96px">
+            <el-select v-model="value.gender" multiple placeholder="请选择性别/可多选" >
+              <el-option
+                v-for="sexItem in sexStatusOptions"
+                :key="sexItem.id"
+                :label="sexItem.name"
+                :value="sexItem.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+      </el-form-item>
+
     </el-form>
   </div>
 </template>
 <script>
+import { isEmpty, isJSON } from '@/utils'
 const _cloneDeep = require('lodash/cloneDeep')
-import { sizeStatusOptions } from '../options'
+import { sizeStatusOptions, sexLimitStatusOptions, sexLimitStatus, sexStatusOptions } from '../options'
 export default {
   name: 'EditGoodsInfoDetail',
   props: {
@@ -34,7 +57,12 @@ export default {
   },
   data() {
     return {
+      hasInit: false,
+      selectedSexLimit: null,
+      sexLimitStatus,
+      sexStatusOptions,
       sizeStatusOptions,
+      sexLimitStatusOptions,
       goodsInfoFormRules: {
         name: [
           { required: true, message: '请输入商品名称', trigger: 'blur' },
@@ -48,9 +76,38 @@ export default {
     }
   },
   methods: {
+    initEdit() {
+      this.$nextTick(() => {
+        this.setGender()
+      })
+    },
     // 返回`elementUI`表单验证的结果（为`promise`对象）
     validate() {
       return this.$refs.goodsInfoFormRef.validate()
+    },
+    handleSexLimitChange(v) {
+      if(v === sexLimitStatus.LIMIT) {
+        this.value.gender = []
+      }
+    },
+    setGender() {
+      let parseRs = this.value.gender
+      console.log(isJSON(parseRs))
+      if(isJSON(parseRs)) {
+        parseRs = JSON.parse(this.value.gender)
+      }
+      if(Array.isArray(parseRs)) {
+        if(parseRs.length === 0) {
+          this.selectedSexLimit = sexLimitStatus.UNLIMI
+          return
+        }
+        if(parseRs.length > 0) {
+          this.selectedSexLimit = sexLimitStatus.LIMIT
+          return
+        }
+      }
+      this.selectedSexLimit = ''
+      return
     }
   }
 }
