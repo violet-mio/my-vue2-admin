@@ -66,42 +66,34 @@ export default {
       this.loading = false
     },
     handleSumbit() {
-      this.showLoading()
-      this.$refs.postFormRef.validate()
-        .then(() => {
-        // 主表单验证成功，验证第一个子表单
-          return this.$refs.infoFormRef.validate()
-        })
-        .then(() => {
-          return this.$refs.brandFormRef.validate()
-        })
-        .then(() => {
-          return this.$refs.favFormRef.validate()
-        })
-        .then(() => {
+      Promise.all([
+        this.$refs.postFormRef.validate(),
+        this.$refs.infoFormRef.validate(),
+        this.$refs.brandFormRef.validate(),
+        this.$refs.favFormRef.validate()
+      ]).then(() => {
         // 全部验证通过
-          const requestApi = this.isEdit ? updateGoods : createGoods
-          const postFormCopy = _cloneDeep(this.postForm)
+        const requestApi = this.isEdit ? updateGoods : createGoods
+        const postFormCopy = _cloneDeep(this.postForm)
 
-          // TODO删除
-          // console.log(postFormCopy)
-          // this.hideLoading()
-          // return false
-
-          requestApi(JSON.stringify(postFormCopy))
-            .then(res => {
-              this.$message.success(`${this.isEdit ? '编辑成功' : '新增成功'}`)
-              this.$router.push({ name: 'GoodsList', query: { flush: true }})
-            })
-            .finally(() => {
-              this.hideLoading()
-            })
-        })
-        .catch(err => {
-          console.log(err)
-          this.hideLoading()
-          return false
-        })
+        // TODO删除
+        // console.log(postFormCopy)
+        // this.hideLoading()
+        // return false
+        this.showLoading()
+        requestApi(JSON.stringify(postFormCopy))
+          .then(res => {
+            this.$message.success(`${this.isEdit ? '编辑成功' : '新增成功'}`)
+            this.$router.push({ name: 'GoodsList', query: { flush: true }})
+          })
+          .finally(() => {
+            this.hideLoading()
+          })
+      })
+      .catch(err => {
+        console.log(err)
+        return false
+      })
     },
     handleCancel() {
       this.$router.back()

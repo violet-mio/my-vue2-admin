@@ -23,6 +23,7 @@
 const _cloneDeep = require('lodash/cloneDeep')
 import { getBrandOptions } from '@/api/goods'
 import { isEmpty } from '@/utils'
+
 export default {
   name: 'EditGoodsBrandDetail',
   props: {
@@ -37,12 +38,12 @@ export default {
       brandOptions: [],
       goodsBrandFormRules: {
         brand_id: [
-          { required: true, message: '请输入品牌名称', trigger: 'blur' },
+          { required: true, message: '请输入品牌名称', trigger: 'change' },
         ],
-        // keywords: [
-        //   { required: true, message: '请输入关键词', trigger: 'blur' },
-        //   { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
-        // ]
+        keywords: [
+          { required: true, message: '请输入关键词', trigger: 'blur' },
+          { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -61,9 +62,6 @@ export default {
       },
       immediate: true
     }
-  },
-  created() {
-    // this.getBrandOptions()
   },
   methods: {
     // 返回`elementUI`表单验证的结果（为`promise`对象）

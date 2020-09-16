@@ -46,6 +46,7 @@
 import { isEmpty, isJSON } from '@/utils'
 const _cloneDeep = require('lodash/cloneDeep')
 import { sizeStatusOptions, sexLimitStatusOptions, sexLimitStatus, sexStatusOptions } from '../options'
+
 export default {
   name: 'EditGoodsInfoDetail',
   props: {

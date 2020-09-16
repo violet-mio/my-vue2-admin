@@ -62,12 +62,11 @@ export default {
     brandId: {
       handler: function(newVal, oldVal) {
         const isEmptyToVal = !isEmpty(newVal) && isEmpty(oldVal)
-        // 排除编辑状态下，首次服务端赋值时，不进行置空
+        // 编辑状态下，首次服务端赋值时，不进行置空
         if(!(this.isEdit && isEmptyToVal)) {
           this.value.product = ''
         }
         if(isEmpty(newVal)) return
-        // console.log(isEmptyToVal)
         this.getProductOptions(newVal)
       },
       immediate: true
