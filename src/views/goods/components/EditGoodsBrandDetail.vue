@@ -68,6 +68,9 @@ export default {
     validate() {
       return this.$refs.goodsBrandFormRef.validate()
     },
+    getData(postFormCopy) {
+      return postFormCopy
+    },
     getBrandOptions() {
       getBrandOptions().then(res => {
         this.brandOptions = res.data.list

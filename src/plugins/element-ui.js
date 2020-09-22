@@ -33,7 +33,8 @@ import {
   MessageBox,
   Notification,
   Message,
-  Row
+  Row,
+  InputNumber
 } from 'element-ui'
 
 // 设置语言
@@ -71,6 +72,7 @@ Vue.use(TableColumn)
 Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Row)
+Vue.use(InputNumber)
 
 // Vue.use(Loading.directive)
 

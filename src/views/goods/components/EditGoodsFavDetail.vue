@@ -77,6 +77,9 @@ export default {
     validate() {
       return this.$refs.goodsFavFormRef.validate()
     },
+    getData(postFormCopy) {
+      return postFormCopy
+    },
     getProductOptions(id) {
       return new Promise((resolve, reject) => {
         getProductOptions(id).then(res => {

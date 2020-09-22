@@ -5,7 +5,7 @@
         <el-input v-model="value.name" />
       </el-form-item>
       <el-form-item label="价格" prop="price">
-        <el-input v-model="value.price" />
+        <el-input-number v-model="value.price" />
       </el-form-item>
       <el-form-item label="大小">
         <el-select v-model="value.size" placeholder="请输入大小">
@@ -69,18 +69,25 @@ export default {
           { required: true, message: '请输入商品名称', trigger: 'blur' },
           { min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur' }
         ],
-        // price: [
-        //   { required: true, message: '请输入价格', trigger: 'blur' },
-        //   { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
-        // ]
+        price: [
+          { required: true, message: '请输入价格', trigger: 'blur' }
+        ]
       }
     }
   },
   methods: {
     initEdit() {
-      this.$nextTick(() => {
-        this.setGender()
-      })
+      const detail = this.value
+      detail.price = detail.price / 100
+      if(detail.gender) {
+        this.setGender(detail.gender)
+        this.value.gender = JSON.parse(detail.gender)
+      }
+    },
+    getData(postFormCopy) {
+      postFormCopy.price = postFormCopy.price * 100
+      postFormCopy.gender = JSON.stringify(postFormCopy.gender)
+      return postFormCopy
     },
     // 返回`elementUI`表单验证的结果（为`promise`对象）
     validate() {
@@ -91,12 +98,8 @@ export default {
         this.value.gender = []
       }
     },
-    setGender() {
-      let parseRs = this.value.gender
-      console.log(isJSON(parseRs))
-      if(isJSON(parseRs)) {
-        parseRs = JSON.parse(this.value.gender)
-      }
+    setGender(v) {
+      let parseRs = JSON.parse(v)
       if(Array.isArray(parseRs)) {
         if(parseRs.length === 0) {
           this.selectedSexLimit = sexLimitStatus.UNLIMI

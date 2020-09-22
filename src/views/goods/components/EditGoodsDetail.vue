@@ -20,6 +20,7 @@ import EditGoodsBrandDetail from './EditGoodsBrandDetail'
 import EditGoodsFavDetail from './EditGoodsFavDetail'
 const _cloneDeep = require('lodash/cloneDeep')
 
+// 
 const defaultPostForm = {
   name: '',
   price: '',
@@ -56,6 +57,12 @@ export default {
       const id = this.$route.query.id
       this.postForm.id = id
       this.getDetail(this.postForm.id)
+        .then(() => {
+          this.$refs.infoFormRef.initEdit()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   methods: {
@@ -74,8 +81,10 @@ export default {
       ]).then(() => {
         // 全部验证通过
         const requestApi = this.isEdit ? updateGoods : createGoods
-        const postFormCopy = _cloneDeep(this.postForm)
-
+        let postFormCopy = _cloneDeep(this.postForm)
+        postFormCopy = this.$refs.infoFormRef.getData(postFormCopy)
+        postFormCopy = this.$refs.brandFormRef.getData(postFormCopy)
+        postFormCopy = this.$refs.favFormRef.getData(postFormCopy)
         // TODO删除
         // console.log(postFormCopy)
         // this.hideLoading()
@@ -103,8 +112,6 @@ export default {
         getGoodsDetail(id).then(res => {
           const data = res.data
           this.postForm = data
-          this.$refs.infoFormRef.initEdit && this.$refs.infoFormRef.initEdit()
-          // this.postForm = Object.assign(this.postForm, data)
           resolve(data)
         }).catch(err => {
           console.log(err)
