@@ -192,6 +192,19 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/date',
+    component: Layout,
+    meta: { title: 'date', icon: 'table' },
+    children: [
+      {
+        path: 'index',
+        name: 'DatePage',
+        component: () => import('@/views/date/index'),
+        meta: { title: 'DatePage', icon: 'list' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

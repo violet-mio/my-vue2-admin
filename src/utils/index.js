@@ -135,14 +135,18 @@ export function genOptionList(status, statusMap) {
 
 // 空值
 export function isEmpty(v) {
+  if (v === '' || v === undefined || v === null) {
+    return true
+  }
+
   if (typeof v === 'object') {
     if (Array.isArray(v)) {
-      return v.length
+      return v.length === 0
     } else {
-      return Object.keys(v).length
+      return Object.keys(v).length === 0
     }
   }
-  return v === undefined || v === null || v === ''
+  return false
 }
 
 // 判断是否是JSON
