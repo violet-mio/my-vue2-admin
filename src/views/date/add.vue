@@ -1,12 +1,13 @@
 <template>
   <div>
-    <DateDetail :is-edit="false">
+    <DateDetail :is-edit="false" />
   </div>
 </template>
 
 <script>
-  import moduleName from './components/DateDetail';
+  import DateDetail from './components/DateDetail';
   export default {
+    name: 'AddDate',
     components: {
       DateDetail
     }

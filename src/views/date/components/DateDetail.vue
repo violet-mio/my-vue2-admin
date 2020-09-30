@@ -32,6 +32,15 @@
         default: false
       }
     },
+    created() {
+      if(this.isEdit) {
+        const id = this.$route.query.id
+        console.log(id)
+        if(!isEmpty(id)) {
+          this.getDetail(id)
+        }
+      }
+    },
     data() {
       const validDate = (rule, value, callback) => {
         if (isEmpty(value)) {
@@ -93,14 +102,25 @@
         .validate()
         .then(() => {
           console.log(this.form)
-          const requestApi = this.isEdit ? createDate : updateDate
+          const requestApi = this.isEdit ? updateDate : createDate 
           requestApi(this.form)
           .then(() => {
             this.$message.success('提交成功')
+            this.$router.push({ name: 'DateList', query: { flush: true }})
           })
         })
         .catch(err => {
           console.log(err)
+        })
+      },
+      getDetail(id){
+       getDateDetail(id)
+        .then(res => {
+          const detail = res.data.detail
+          detail.started_at = detail.started_at * 1000
+          detail.ended_at = detail.ended_at * 1000
+          detail.dateRange = [detail.started_at, detail.ended_at]
+          this.form = Object.assign(this.form, detail)
         })
       }
     },

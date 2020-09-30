@@ -7,9 +7,9 @@ export function getDateList() {
     method: 'get'
   })
 }
-export function getDateDetail() {
+export function getDateDetail(id) {
   return request({
-    url: '/date',
+    url: `/date/${id}`,
     method: 'get'
   })
 }
