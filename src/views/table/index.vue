@@ -39,20 +39,6 @@
           @click="handleAdd"
         >新增</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          icon="el-icon-edit"
-          @click="handleUpdate"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          icon="el-icon-download"
-          @click="handleExport"
-        >导出</el-button>
-      </el-col>
     </el-row>
 
     <el-table
@@ -192,12 +178,6 @@ export default {
     },
     handleAdd() {
       console.log('add')
-    },
-    handleUpdate() {
-      console.log('Update')
-    },
-    handleExport() {
-      console.log('Export')
     }
   }
 }
