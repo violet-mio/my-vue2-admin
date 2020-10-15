@@ -15,9 +15,13 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import Pagination from '@/components/Pagination'
+import permission from '@/directive/permission/index';
+import fastClick from '@/directive/fast-click/index';
 
 // 全局引入
 Vue.component('Pagination', Pagination)
+Vue.use(permission)
+Vue.use(fastClick)
 
 Vue.config.productionTip = false
 

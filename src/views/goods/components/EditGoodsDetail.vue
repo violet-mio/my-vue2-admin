@@ -6,7 +6,7 @@
       <edit-goods-fav-detail ref="favFormRef" v-model="postForm" :is-edit="isEdit" />
 
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="handleSumbit">提 交</el-button>
+        <el-button :loading="loading" type="primary" @click="handleSumbit">提 交</el-button>
         <el-button @click="handleCancel">取 消</el-button>
       </el-form-item>
     </el-form>

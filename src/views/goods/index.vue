@@ -17,8 +17,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button v-fast-click type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-button v-permission="['editor']" icon="el-icon-refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
