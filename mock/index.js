@@ -4,11 +4,13 @@ const { param2Obj } = require('./utils')
 const user = require('./user')
 const table = require('./table')
 const goods = require('./goods')
+const multiSelect = require('./multi-select')
 
 const mocks = [
   ...user,
   ...table,
-  ...goods
+  ...goods,
+  ...multiSelect
 ]
 
 // for front mock

@@ -169,7 +169,7 @@ export const asyncRoutes = [
   {
     path: '/goods',
     component: Layout,
-    meta: { title: 'GOODS', icon: 'table' },
+    meta: { title: 'goods', icon: 'table' },
     children: [
       {
         path: 'list',
@@ -190,6 +190,33 @@ export const asyncRoutes = [
         meta: { title: 'EditGoods', icon: 'edit', noCache: true },
         hidden: true
       }
+    ]
+  },
+  {
+    path: '/multi-select',
+    component: Layout,
+    meta: { title: 'multi-select', icon: 'table' },
+    children: [
+      {
+        path: 'list',
+        name: 'MultiSelectList',
+        component: () => import('@/views/multi-select/index'),
+        meta: { title: 'MultiSelectList', icon: 'list' }
+      },
+      {
+        path: 'add',
+        name: 'AddMultiSelectDetail',
+        component: () => import('@/views/multi-select/add'),
+        meta: { title: 'AddMultiSelectDetail', icon: 'edit', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'edit',
+        name: 'EditMultiSelectDetail',
+        component: () => import('@/views/multi-select/edit'),
+        meta: { title: 'EditMultiSelectDetail', icon: 'edit', noCache: true },
+        hidden: true
+      },
     ]
   },
 
