@@ -31,7 +31,7 @@ export function getPositionDetail(id) {
   })
 }
 
-export function getAreaOptions() {
+export function getAreaOptions(id) {
   return request({
     url: `/position/area/options`,
     method: 'get'

@@ -6,7 +6,7 @@
       </el-form-item>
 
       <el-form-item label="area">
-        <el-select v-model="postForm.area" placeholder="placeholder" @change="handleAreaChange">
+        <el-select v-model="postForm.area" placeholder="placeholder" @visible-change="handleSelectVisibleChange">
           <el-option 
             v-for="item in areaOptions" 
             :key="item.id" 
@@ -17,7 +17,7 @@
       </el-form-item>
 
       <el-form-item label="second_area">
-        <el-select v-model="postForm.second_area" placeholder="placeholder" @change="handleSecAreaChange">
+        <el-select v-model="postForm.second_area" placeholder="placeholder" @visible-change="handleSelectVisibleChange">
           <el-option 
             v-for="item in secondOptions" 
             :key="item.id" 
@@ -28,7 +28,7 @@
       </el-form-item>
 
       <el-form-item label="service">
-        <el-select v-model="postForm.service" placeholder="placeholder" @change="handleServiceChange">
+        <el-select v-model="postForm.service" placeholder="placeholder" @visible-change="handleSelectVisibleChange">
           <el-option 
             v-for="item in serviceOptions" 
             :key="item.id" 
@@ -69,7 +69,26 @@ import { isEmpty } from '@/utils';
         postForm: Object.assign({}, postForm),
         areaOptions: [],
         secondOptions: [],
-        serviceOptions: []
+        serviceOptions: [],
+        isSelectVisible: false // 是否是下拉框出现触发
+      }
+    },
+    watch: {
+      'postForm.area'(newVal, oldVal) {
+        if(this.isSelectVisible) {
+          this.postForm.second_area = ''
+        }
+        if(!isEmpty(newVal)) {
+          this.getSecondAreaOptions(newVal)
+        }
+      },
+      'postForm.second_area'(newVal, oldVal) {
+        if(this.isSelectVisible) {
+          this.postForm.service = ''
+        }
+        if(!isEmpty(newVal)) {
+          this.getServiceOptions(newVal)
+        }
       }
     },
     created() {
@@ -87,32 +106,17 @@ import { isEmpty } from '@/utils';
           this.areaOptions = res.data.list
         })
       },
-      getServiceOptions() {
-        getServiceOptions()
+      getServiceOptions(id) {
+        getServiceOptions(id)
         .then(res => {
           this.serviceOptions = res.data.list
         })
       },
-      getSecondAreaOptions() {
-        getSecondAreaOptions()
+      getSecondAreaOptions(id) {
+        getSecondAreaOptions(id)
         .then(res => {
           this.secondOptions = res.data.list
         })
-      },
-      handleAreaChange(v) {
-        if(isEmpty(v)) {
-          this.secondOptions = []
-        }
-        this.getSecondAreaOptions()
-      },
-      handleSecAreaChange(v) {
-        if(isEmpty(v)) {
-          this.serviceOptions = []
-        }
-        this.getServiceOptions()
-      },
-      handleServiceChange() {
-
       },
       handleSumbit() {
         this.$refs.postForm.validate()
@@ -133,10 +137,19 @@ import { isEmpty } from '@/utils';
         this.$router.back()
       },
       getDetail(id) {
-        getPositionDetail(id)
-        .then(res => {
-          this.postForm = res.data
+        return new Promise((resolve, reject) => {
+          getPositionDetail(id)
+          .then(res => {
+            this.postForm = res.data
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
         })
+      },
+      handleSelectVisibleChange(v) {
+        this.isSelectVisible = v
       }
     },
 

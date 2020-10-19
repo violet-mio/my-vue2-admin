@@ -23,6 +23,75 @@ const positionList = ((len) => {
   return list
 })(count = 5)
 
+const areaList = [...new Array(6)].map((_, i) => {
+  return {
+    id: Random.increment(1000),
+    name: `area_${i+1}`
+  }
+})
+
+const sec_area_obj = (() => {
+  const map = new Map()
+  const areaLength = areaList.length
+  for (let i = 0; i < areaLength; i++) {
+    const area = areaList[i]
+    const id = area.id
+    const sec_len = i + 1
+    for (let j = 0; j < sec_len; j++) {
+      if(!map.has(id)) {
+        map.set(id, [])
+      }
+      const value = map.get(id)
+      value.push({
+        id: Random.increment(2000),
+        name: `sec_area_${sec_len}_${j+1}`
+      })
+      map.set(id, value)
+    }
+  }
+
+  const getSecAreasByParentId = parentId => {
+    if(map.has(parentId)) {
+      return map.get(parentId)
+    }
+  }
+  return {
+    map,
+    getSecAreasByParentId
+  }
+})()
+const all_sec_areas = [...sec_area_obj.map.values()].reduce((prev, cur) => {
+  return [...prev, ...cur]
+}, [])
+
+const service_obj = (() => {
+  const map = new Map();
+  [...new Array(all_sec_areas.length)].map((_, index) => {
+    const id = all_sec_areas[index].id
+    const len = index + 1
+  
+    for (let i = 0; i < len; i++) {
+      if(!map.has(id)) {
+        map.set(id, [])
+      }
+      const value = map.get(id)
+      value.push({
+        id: Random.increment(2000),
+        name: `service_${id}_${i+1}`
+      })
+      map.set(id, value)
+    }
+  })
+  const getServicesByParentId = parentId => {
+    if(map.has(parentId)) {
+      return map.get(parentId)
+    }
+  }
+  return {
+    map,
+    getServicesByParentId
+  }
+})()
 
 module.exports = [
   {
@@ -101,12 +170,6 @@ module.exports = [
     url: /\/position\/area\/options/,
     type: 'get',
     response: () => {
-      const areaList = [...new Array(6)].map((_, i) => {
-        return {
-          id: Random.increment(1000),
-          name: `area_${i+1}`
-        }
-      })
 
       return {
         code: 20000,
@@ -120,18 +183,21 @@ module.exports = [
     // 二级大区选项
     url: /\/position\/second-area\/options/,
     type: 'get',
-    response: () => {
-      const areaList = [...new Array(3)].map((_, i) => {
+    response: config => {
+      const { id } = config.query
+      const { getSecAreasByParentId, map } = sec_area_obj
+      if(isEmpty(id)) {
         return {
-          id: Random.increment(2000),
-          name: `sec_area_${i+1}`
+          code: 401,
+          data: {
+            list: []
+          }
         }
-      })
-
+      }
       return {
         code: 20000,
         data: {
-          list: areaList
+          list: getSecAreasByParentId(+id) || []
         }
       }
     }
@@ -140,18 +206,21 @@ module.exports = [
     // 服务选项
     url: /\/position\/service\/options/,
     type: 'get',
-    response: () => {
-      const serviceList = [...new Array(5)].map((_, i) => {
+    response: config => {
+      const { id } = config.query
+      const { getServicesByParentId } = service_obj
+      if(isEmpty(id)) {
         return {
-          id: Random.increment(1000),
-          name: `service_${i+1}`
+          code: 401,
+          data: {
+            list: []
+          }
         }
-      })
-
+      }
       return {
         code: 20000,
         data: {
-          list: serviceList
+          list: getServicesByParentId(+id) || []
         }
       }
     }
