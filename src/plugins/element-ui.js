@@ -34,7 +34,8 @@ import {
   Notification,
   Message,
   Row,
-  InputNumber
+  InputNumber,
+  Upload
 } from 'element-ui'
 
 // 设置语言
@@ -73,6 +74,7 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Row)
 Vue.use(InputNumber)
+Vue.use(Upload)
 
 // Vue.use(Loading.directive)
 

@@ -90,6 +90,18 @@ export const constantRoutes = [
         meta: { title: 'Form', icon: 'form' }
       }
     ]
+  },
+  {
+    path: '/upload-video',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'UploadVideo',
+        component: () => import('@/views/upload-video/index'),
+        meta: { title: 'UploadVideo', icon: 'add' }
+      }
+    ]
   }
 ]
 

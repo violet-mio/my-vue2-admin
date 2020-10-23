@@ -24,8 +24,10 @@
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "vue": "2.6.10",
+    "vue-dplayer": "0.0.10",
     "vue-router": "3.0.6",
-    "vuex": "3.1.0"
+    "vuex": "3.1.0",
+    "xgplayer-vue": "^1.1.5"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.10.2",
