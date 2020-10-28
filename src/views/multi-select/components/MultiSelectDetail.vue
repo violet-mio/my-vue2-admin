@@ -77,6 +77,7 @@ import { isEmpty } from '@/utils';
       'postForm.area'(newVal, oldVal) {
         if(this.isSelectVisible) {
           this.postForm.second_area = ''
+          this.secondOptions = []
         }
         if(!isEmpty(newVal)) {
           this.getSecondAreaOptions(newVal)
@@ -85,6 +86,7 @@ import { isEmpty } from '@/utils';
       'postForm.second_area'(newVal, oldVal) {
         if(this.isSelectVisible) {
           this.postForm.service = ''
+          this.serviceOptions = []
         }
         if(!isEmpty(newVal)) {
           this.getServiceOptions(newVal)
