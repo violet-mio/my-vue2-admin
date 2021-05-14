@@ -1,31 +1,31 @@
 <template>
   <div>
-    <el-button type="primary" size="mini" @click="updateSeries">拉取新数据</el-button>
+    <el-button type="primary" size="mini" @click="updateSeries">手动拉取新数据</el-button>
     <div v-loading="loading" id="line-charts"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts'
+const _debounce = require('lodash/debounce')
 
 export default {
   name: 'LineCharts',
   data() {
     return {
       chart: null,
-      loading: false
+      loading: false,
+      debounceResizeHandler: null
     }
   },
   mounted() {
     this.initLineCharts()
+    this.addResizeListener()
     this.updateSeries()
   },
   beforeDestroy() {
-    if(this.chart) {
-      // 销毁实例
-      this.chart.dispose()
-      this.chart = null
-    }
+    this.removeResizeListener()
+    this.destroyChart()
   },
   methods: {
     updateSeries() {
@@ -48,10 +48,11 @@ export default {
     },
     getList() {
       return new Promise((resolve, reject) => {
+        // 模拟请求
         setTimeout(() => {
           const list = new Array(6).fill(1).map(_ => parseInt(Math.random() * 100))
           resolve(list)
-        }, 500)
+        }, 300)
       })
     },
     initLineCharts() {
@@ -76,6 +77,28 @@ export default {
         ]
       }
       this.chart.setOption(option)
+    },
+    addResizeListener() {
+      this.debounceResizeHandler = _debounce(() => {
+        this.resize()
+      }, 200)
+      window.addEventListener('resize', this.debounceResizeHandler)
+    },
+    removeResizeListener() {
+      if(this.debounceResizeHandler) {
+        window.removeResizeListener('resize', this.debounceResizeHandler)
+      }
+    },
+    // 屏幕尺寸变化时，重新设置大小
+    resize() {
+      this.chart && this.chart.resize()
+    },
+    // 销毁chart实例
+    destroyChart() {
+      if(this.chart) {
+        this.chart.dispose()
+        this.chart = null
+      }
     }
   }
 }
