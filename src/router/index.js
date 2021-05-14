@@ -99,7 +99,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'UploadVideo',
         component: () => import('@/views/upload-video/index'),
-        meta: { title: 'UploadVideo', icon: 'add' }
+        meta: { title: 'UploadVideo', icon: 'el-icon-video-camera-solid' }
       }
     ]
   }
@@ -207,7 +207,7 @@ export const asyncRoutes = [
   {
     path: '/multi-select',
     component: Layout,
-    meta: { title: 'multi-select', icon: 'table' },
+    meta: { title: 'multi-select', icon: 'el-icon-s-marketing' },
     children: [
       {
         path: 'list',
@@ -234,13 +234,13 @@ export const asyncRoutes = [
   {
     path: '/charts',
     component: Layout,
-    meta: { title: 'charts', icon: 'table' },
+    meta: { title: 'charts', icon: 'chart' },
     children: [
       {
         path: 'line-charts',
         name: 'LineCharts',
         component: () => import('@/views/charts/line-charts'),
-        meta: { title: 'LineCharts', icon: 'list' }
+        meta: { title: 'LineCharts' }
       }
     ]
   },
