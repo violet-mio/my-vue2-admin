@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="updateSeries">拉取数据</el-button>
+    <el-button type="primary" size="mini" @click="updateSeries">拉取新数据</el-button>
     <div v-loading="loading" id="line-charts"></div>
   </div>
 </template>
@@ -12,13 +12,20 @@ export default {
   name: 'LineCharts',
   data() {
     return {
-      myChartIns: null,
+      chart: null,
       loading: false
     }
   },
   mounted() {
-    this.initLineChartsIns()
+    this.initLineCharts()
     this.updateSeries()
+  },
+  beforeDestroy() {
+    if(this.chart) {
+      // 销毁实例
+      this.chart.dispose()
+      this.chart = null
+    }
   },
   methods: {
     updateSeries() {
@@ -26,11 +33,12 @@ export default {
       this.getList()
       .then(list => {
         if (list && Array.isArray(list)) {
-          if (this.myChartIns) {
-            const option = this.myChartIns.getOption()
+          if (this.chart) {
+            const option = this.chart.getOption()
+            // 使用服务器数据替换原来的数据
             option.series[0].data = list
-            this.myChartIns.clear()
-            this.myChartIns.setOption(option)
+            this.chart.clear()
+            this.chart.setOption(option)
           }
         }
       })
@@ -41,17 +49,18 @@ export default {
     getList() {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          const list = new Array(20).fill(1).map(_ => parseInt(Math.random() * 100))
+          const list = new Array(6).fill(1).map(_ => parseInt(Math.random() * 100))
           resolve(list)
         }, 500)
       })
     },
-    initLineChartsIns() {
+    initLineCharts() {
       // 基于准备好的dom，初始化echarts实例
-      this.myChartIns = echarts.init(document.getElementById('line-charts'))
+      this.chart = echarts.init(document.getElementById('line-charts'))
+      // 使用option进行第一次初始化
       const option = {
         title: {
-          text: 'ECharts 入门示例'
+          text: '标题'
         },
         tooltip: {},
         xAxis: {
@@ -66,7 +75,7 @@ export default {
           }
         ]
       }
-      this.myChartIns.setOption(option)
+      this.chart.setOption(option)
     }
   }
 }
