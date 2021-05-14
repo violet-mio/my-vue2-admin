@@ -231,6 +231,19 @@ export const asyncRoutes = [
       },
     ]
   },
+  {
+    path: '/charts',
+    component: Layout,
+    meta: { title: 'charts', icon: 'table' },
+    children: [
+      {
+        path: 'line-charts',
+        name: 'LineCharts',
+        component: () => import('@/views/charts/line-charts'),
+        meta: { title: 'LineCharts', icon: 'list' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
