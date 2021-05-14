@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id="line-charts"></div>
+    <el-button type="primary" @click="updateSeries">拉取数据</el-button>
+    <div v-loading="loading" id="line-charts"></div>
   </div>
 </template>
 
@@ -10,18 +11,45 @@ import * as echarts from 'echarts'
 export default {
   name: 'LineCharts',
   data() {
-    return {}
+    return {
+      myChartIns: null,
+      loading: false
+    }
   },
   mounted() {
-    this.initLineCharts()
+    this.initLineChartsIns()
+    this.updateSeries()
   },
   methods: {
-    initLineCharts() {
+    updateSeries() {
+      this.loading = true
+      this.getList()
+      .then(list => {
+        if (list && Array.isArray(list)) {
+          if (this.myChartIns) {
+            const option = this.myChartIns.getOption()
+            option.series[0].data = list
+            this.myChartIns.clear()
+            this.myChartIns.setOption(option)
+          }
+        }
+      })
+      .finally(() => {
+        this.loading = false
+      })
+    },
+    getList() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const list = new Array(20).fill(1).map(_ => parseInt(Math.random() * 100))
+          resolve(list)
+        }, 500)
+      })
+    },
+    initLineChartsIns() {
       // 基于准备好的dom，初始化echarts实例
-      const myChart = echarts.init(document.getElementById('line-charts'))
-
-      // 绘制图表
-      myChart.setOption({
+      this.myChartIns = echarts.init(document.getElementById('line-charts'))
+      const option = {
         title: {
           text: 'ECharts 入门示例'
         },
@@ -34,17 +62,18 @@ export default {
           {
             name: '销量',
             type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
+            data: []
           }
         ]
-      })
+      }
+      this.myChartIns.setOption(option)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  #line-charts {
-    min-height: 400px;
-  }
+#line-charts {
+  min-height: 400px;
+}
 </style>
