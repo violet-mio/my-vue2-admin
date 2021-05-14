@@ -6,6 +6,28 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
+// 自动导入./modules下的路由模块
+const routesModules = require.context('./modules', false, /\.js$/)
+const requireRouteList = routesModules.keys().map(route => {
+  return routesModules(route).default
+})
+// 排序
+requireRouteList.sort((a, b) => {
+  if (a.sortNo && b.sortNo) {
+    // 按照升序排列
+    return (a.sortNo - b.sortNo)
+  }
+  if (a.sortNo) {
+    // a 会被排列到 b 之前
+    return -1
+  }
+  if (b.sortNo) {
+    // a 会被排列到 b 之后
+    return 1
+  }
+  return 0
+})
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -55,53 +77,6 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
     }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-  {
-    path: '/upload-video',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'UploadVideo',
-        component: () => import('@/views/upload-video/index'),
-        meta: { title: 'UploadVideo', icon: 'el-icon-video-camera-solid' }
-      }
-    ]
   }
 ]
 
@@ -110,141 +85,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-  {
-    path: '/goods',
-    component: Layout,
-    meta: { title: 'goods', icon: 'table' },
-    children: [
-      {
-        path: 'list',
-        name: 'GoodsList',
-        component: () => import('@/views/goods/index'),
-        meta: { title: 'GoodsList', icon: 'list' }
-      },
-      {
-        path: 'add',
-        name: 'AddGoods',
-        component: () => import('@/views/goods/add'),
-        meta: { title: 'AddGoods', icon: 'add', noCache: true }
-      },
-      {
-        path: 'edit',
-        name: 'EditGoods',
-        component: () => import('@/views/goods/edit'),
-        meta: { title: 'EditGoods', icon: 'edit', noCache: true },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/multi-select',
-    component: Layout,
-    meta: { title: 'multi-select', icon: 'el-icon-s-marketing' },
-    children: [
-      {
-        path: 'list',
-        name: 'MultiSelectList',
-        component: () => import('@/views/multi-select/index'),
-        meta: { title: 'MultiSelectList', icon: 'list' }
-      },
-      {
-        path: 'add',
-        name: 'AddMultiSelectDetail',
-        component: () => import('@/views/multi-select/add'),
-        meta: { title: 'AddMultiSelectDetail', icon: 'edit', noCache: true },
-        hidden: true
-      },
-      {
-        path: 'edit',
-        name: 'EditMultiSelectDetail',
-        component: () => import('@/views/multi-select/edit'),
-        meta: { title: 'EditMultiSelectDetail', icon: 'edit', noCache: true },
-        hidden: true
-      },
-    ]
-  },
-  {
-    path: '/charts',
-    component: Layout,
-    meta: { title: 'charts', icon: 'chart' },
-    children: [
-      {
-        path: 'line-charts',
-        name: 'LineCharts',
-        component: () => import('@/views/charts/line-charts'),
-        meta: { title: 'LineCharts' }
-      }
-    ]
-  },
-
+  ...requireRouteList,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
