@@ -1,5 +1,5 @@
 {
-  "name": "my-admin",
+  "name": "my-admin-multiple-page",
   "version": "4.3.0",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
@@ -26,6 +26,7 @@
     "path-to-regexp": "2.4.0",
     "vue": "2.6.10",
     "vue-dplayer": "0.0.10",
+    "vue-meta-info": "^0.1.7",
     "vue-router": "3.0.6",
     "vuex": "3.1.0",
     "xgplayer-vue": "^1.1.5"
@@ -49,6 +50,7 @@
     "eslint-plugin-vue": "5.2.2",
     "html-webpack-plugin": "3.2.0",
     "mockjs": "1.0.1-beta3",
+    "prerender-spa-plugin": "^3.4.0",
     "runjs": "^4.3.2",
     "sass": "^1.26.8",
     "sass-loader": "^7.1.0",

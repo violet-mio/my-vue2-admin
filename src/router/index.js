@@ -56,8 +56,18 @@ requireRouteList.sort((a, b) => {
  */
 export const constantRoutes = [
   {
+    path: '/home',
+    component: () => import('@/views/home/index'),
+    hidden: true
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/',
+    redirect: '/home',
     hidden: true
   },
 
@@ -68,9 +78,8 @@ export const constantRoutes = [
   },
 
   {
-    path: '/',
+    path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard',
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
@@ -91,6 +100,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
+  mode: 'history',
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
