@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 import { SORT_NO_ENUM } from '../constant'
 
-export default   {
+export default {
   path: '/nested',
   component: Layout,
   name: 'Nested',

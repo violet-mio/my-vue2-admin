@@ -46,8 +46,11 @@ requireRouteList.sort((a, b) => {
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
     noCache: true                if set true, the page will no be cached(default is false)
     affix: true                  if set true, the tag will affix in the tags-view
+    noLogin: true                if set true, not login to page
   }
  */
+
+import PagesContainerLayout from '@/PagesContainer'
 
 /**
  * constantRoutes
@@ -56,20 +59,42 @@ requireRouteList.sort((a, b) => {
  */
 export const constantRoutes = [
   {
-    path: '/home',
-    component: () => import('@/views/home/index'),
-    hidden: true
+    path: '/',
+    // redirect: { name: 'Home' },
+    // component: PagesContainerLayout,
+    // children: [{
+    //   path: '/home',
+    //   name: 'Home',
+    //   component: () => import('@/pages/home/index'),
+    //   hidden: true,
+    //   meta: { noLogin: true, title: '首页' }
+    // }]
+
+    component: () => import('@/pages/home/index'),
+    hidden: true,
+    meta: { noLogin: true, title: '首页' }
+  },
+  {
+    path: '/home-info',
+    component: PagesContainerLayout,
+    children: [{
+      path: '',
+      name: 'HomeInfo',
+      component: () => import('@/pages/home-info/index'),
+      hidden: true,
+      meta: { noLogin: true, title: '消息中心' }
+    }]
   },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-  {
-    path: '/',
-    redirect: '/home',
-    hidden: true
-  },
+  // {
+  //   path: '/',
+  //   redirect: '/home',
+  //   hidden: true
+  // },
 
   {
     path: '/404',

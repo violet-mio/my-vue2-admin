@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 import { SORT_NO_ENUM } from '../constant'
 
-export default   {
+export default {
   path: '/goods',
   component: Layout,
   meta: { title: 'Goods', icon: 'table' },

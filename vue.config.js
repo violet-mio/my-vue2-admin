@@ -13,10 +13,14 @@ const plugins = []
 if (isProd) {
   plugins.push(new PrerenderSPAPlugin({
     staticDir: path.join(__dirname, 'dist'),
-    routes: ['/home', '/login'], // 需要预渲染的路由,
+    routes: ['/', '/home', '/home-info'], // 需要预渲染的路由,
+
     // 这个很重要，如果没有配置这段，也不会进行预编译
     renderer: new Renderer({
       inject: {},
+      headless: true,
+      // 在渲染指定秒后开始爬取
+      renderAfterTime: 3000,
       // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，两者的事件名称要对应上。
       renderAfterDocumentEvent: 'render-event'
     })
