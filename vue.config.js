@@ -13,7 +13,7 @@ const plugins = []
 if (isProd) {
   plugins.push(new PrerenderSPAPlugin({
     staticDir: path.join(__dirname, 'dist'),
-    routes: ['/', '/home-info'], // 需要预渲染的路由,
+    routes: ['/', '/home-info', '/login'], // 需要预渲染的路由,
 
     // 这个很重要，如果没有配置这段，也不会进行预编译
     renderer: new Renderer({
