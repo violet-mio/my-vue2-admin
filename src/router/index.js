@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import pagesRoutes from './pages'
 
 // 自动导入./modules下的路由模块
 const routesModules = require.context('./modules', false, /\.js$/)
@@ -50,51 +51,28 @@ requireRouteList.sort((a, b) => {
   }
  */
 
-import PagesContainerLayout from '@/PagesContainer'
-
 /**
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
 export const constantRoutes = [
-  {
-    path: '/',
-    // redirect: { name: 'Home' },
-    // component: PagesContainerLayout,
-    // children: [{
-    //   path: '/home',
-    //   name: 'Home',
-    //   component: () => import('@/pages/home/index'),
-    //   hidden: true,
-    //   meta: { noLogin: true, title: '首页' }
-    // }]
-
-    component: () => import('@/pages/home/index'),
-    hidden: true,
-    meta: { noLogin: true, title: '首页' }
-  },
-  {
-    path: '/home-info',
-    component: PagesContainerLayout,
-    children: [{
-      path: '',
-      name: 'HomeInfo',
-      component: () => import('@/pages/home-info/index'),
-      hidden: true,
-      meta: { noLogin: true, title: '消息中心' }
-    }]
-  },
+  pagesRoutes,
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-  // {
-  //   path: '/',
-  //   redirect: '/home',
-  //   hidden: true
-  // },
+  {
+    path: '/dashboard',
+    component: Layout,
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+    }]
+  },
 
   {
     path: '/404',

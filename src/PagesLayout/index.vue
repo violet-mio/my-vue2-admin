@@ -2,21 +2,18 @@
   <div class="page-container">
     <header class="header">
       <h1 class="logo">
-        <a href="/">
+        <router-link to="/">
           <img :src="logoImg" alt="网站首页">
-        </a>
+        </router-link>
       </h1>
       <ul class="nav">
-        <li v-for="item in menuList" :key="item.id" class="nav-item" :class="{ 'active': activeMenu === item.path }">
+        <li v-for="item in menuList" :key="item.id" class="nav-item" :class="{ 'active': isActive(item) }">
           <router-link class="link" :to="item.path">{{ item.label }}</router-link>
         </li>
       </ul>
     </header>
     <main>
-      <keep-alive>
-        <slot />
-        <router-view />
-      </keep-alive>
+      <router-view />
     </main>
     <footer>
       Footer
@@ -27,14 +24,15 @@
 import logoImg from './page-logo.png'
 
 export default {
-  name: 'PagesContainer',
+  name: 'PagesLayout',
   data() {
     return {
       menuList: [
         {
           id: 1,
           label: '首页',
-          path: '/'
+          path: '/home',
+          alias: ['/']
         },
         {
           id: 2,
@@ -55,8 +53,13 @@ export default {
       }
       return path
     }
+  },
+  methods: {
+    isActive(item) {
+      return this.activeMenu === item.path ||
+      (Array.isArray(item.alias) && item.alias.includes(this.activeMenu))
+    }
   }
-
 }
 </script>
 <style lang="scss" scoped>

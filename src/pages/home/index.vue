@@ -1,15 +1,13 @@
 <template>
-  <!-- <div><router-link to="/home-info">前往我的页面</router-link></div> -->
-  <PagesContainerLayout>
+  <div>
+    <div>这是首页</div>
     <router-link to="/home-info">前往我的页面</router-link>
-  </PagesContainerLayout>
+  </div>
 </template>
 <script>
 
-import PagesContainerLayout from '@/PagesContainer'
 export default {
   name: 'Home',
-  components: { PagesContainerLayout },
   metaInfo: {
     title: '首页', // set a title
     meta: [{ // set meta
