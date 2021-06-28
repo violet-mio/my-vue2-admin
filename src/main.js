@@ -28,6 +28,12 @@ Vue.use(fastClick)
 Vue.use(MetaInfo)
 Vue.config.productionTip = false
 
+// 尽在生产环境演示使用，再正式上线前需要可移除
+if (process.env.NODE_ENV === 'production') {
+  const { mockXHR } = require('../mock')
+  mockXHR()
+}
+
 new Vue({
   el: '#app',
   router,
