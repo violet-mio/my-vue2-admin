@@ -38,7 +38,7 @@ $containerWidth: 1200px;
     margin: 0 auto;
 
     main {
-      min-height: 200px;
+      min-height: 400px;
       width: $containerWidth;
       padding: 0 16px;
       margin: 20px auto 0;
