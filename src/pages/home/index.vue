@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <div>这是首页</div>
-    <router-link to="/home-info">前往我的页面</router-link>
-  </div>
+  <PagesLayout>
+    <template v-slot:main>
+      <div>这是首页</div>
+      <router-link to="/home-info">前往我的页面</router-link>
+    </template>
+  </PagesLayout>
 </template>
 <script>
+import PagesLayout from '@/PagesLayout'
 
 export default {
   name: 'Home',
+  components: { PagesLayout },
   metaInfo: {
     title: '首页', // set a title
     meta: [{ // set meta

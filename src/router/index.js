@@ -57,7 +57,7 @@ requireRouteList.sort((a, b) => {
  * all roles can be accessed
  */
 export const constantRoutes = [
-  pagesRoutes,
+  ...pagesRoutes,
   {
     path: '/login',
     component: () => import('@/views/login/index'),
