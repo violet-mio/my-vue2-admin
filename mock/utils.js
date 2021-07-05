@@ -21,8 +21,8 @@ function param2Obj(url) {
 }
 
 const isEmpty = v => {
-  if(typeof v === 'object') {
-    if(Array.isArray(v)) {
+  if (typeof v === 'object') {
+    if (Array.isArray(v)) {
       return v.length
     } else {
       return Object.keys(v).length
@@ -32,7 +32,7 @@ const isEmpty = v => {
 }
 
 const parsePath = (url) => {
-  if(isEmpty(url)) {
+  if (isEmpty(url)) {
     return -1
   }
 
@@ -46,12 +46,25 @@ const isNum = v => {
 }
 
 const getArrRandomCount = (arr, len) => {
-  if(Array.isArray(arr)) {
-    const randomLen = Math.ceil(Math.random() * arr.length);
+  if (Array.isArray(arr)) {
+    const randomLen = Math.ceil(Math.random() * arr.length)
     const tempArr = arr.slice(0, randomLen)
     return tempArr
   } else {
     return []
+  }
+}
+
+const SUCCESS_CODE = 20000
+const ERROR_CODE = -1
+
+const getArrRandomItem = (arr) => {
+  if (Array.isArray(arr)) {
+    const index = Math.floor(Math.random() * arr.length)
+    const itemArr = arr.slice(index, index + 1)
+    return itemArr[0]
+  } else {
+    return null
   }
 }
 
@@ -60,5 +73,8 @@ module.exports = {
   parsePath,
   isEmpty,
   isNum,
-  getArrRandomCount
+  getArrRandomCount,
+  getArrRandomItem,
+  SUCCESS_CODE,
+  ERROR_CODE
 }

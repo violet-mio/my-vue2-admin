@@ -1,33 +1,9 @@
 const Mock = require('mockjs')
 const {
   isEmpty,
-  getArrRandomCount
+  getArrRandomItem,
+  SUCCESS_CODE
 } = require('./utils')
-
-function genOneItem() {
-  return Mock.mock({
-    id: '@increment',
-    name: '@sentence(10, 20)',
-    'status|1': [0, 1, 2],
-    price: '@integer(300, 5000)',
-    display_time: '@datetime'
-  })
-}
-
-const goodsList = ((len) => {
-  const list = []
-  for (let i = 0; i < len; i++) {
-    list.push(genOneItem())
-  }
-  return list
-})(count = 5)
-
-const brandList = ['OBBO', 'WE', 'ME'].map((item, index) => {
-  return {
-    id: index + 1,
-    name: item
-  }
-})
 
 // 广告类型
 const adTypeList = [
@@ -40,7 +16,7 @@ const adTypeList = [
     type_name: '信息流'
   },
   {
-    type_id: 4,
+    type_id: 3,
     type_name: '开屏'
   }
 ]
@@ -82,17 +58,16 @@ const complexFormDemoList = ((len = 50) => {
 module.exports = [
   {
     // 表格列表
-    url: /\/goods\/list[?].+/,
+    url: /\/complex-form-demo\/list[?].+/,
     type: 'get',
     response: config => {
       // 下面是获取列表
-      const { id, name, status, page, limit } = config.query
+      const { id, name, page, limit } = config.query
 
       // 条件筛选
-      const mockList = goodsList.filter(item => {
+      const mockList = complexFormDemoList.filter(item => {
         if (!isEmpty(id) && item.id !== +id) return false
         if (!isEmpty(name) && item.name !== name) return false
-        if (!isEmpty(status) && item.status !== +status) return false
         return true
       })
 
@@ -105,7 +80,7 @@ module.exports = [
       })
 
       return {
-        code: 20000,
+        code: SUCCESS_CODE,
         data: {
           total: pageList.length,
           items: pageList

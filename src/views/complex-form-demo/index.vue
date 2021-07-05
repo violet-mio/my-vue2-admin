@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form ref="listQueryRef" :model="listQuery" :inline="true" label-width="68px">
-      <el-form-item label="名称">
+      <el-form-item label="名称" prop="name">
         <el-input
           v-model="listQuery.name"
           placeholder="请输入名称"
@@ -11,7 +11,7 @@
 
       <el-form-item>
         <el-button v-fast-click type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-        <el-button v-permission="['editor']" icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button v-fast-click icon="el-icon-refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -38,7 +38,7 @@
       <el-table-column label="广告类型" prop="type_name" align="center" />
       <el-table-column label="广告规格" prop="spec_name" align="center" />
 
-      <el-table-column align="center" label="action" width="200">
+      <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" @click="handleGoDetail(scope.row.id)">详情</el-button>
           <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { getComplexFormList } from '@/api/complex-form-list'
+import { getComplexFormList } from '@/api/complex-form-demo'
 
 export default {
   name: 'ComplexFormList',
