@@ -149,6 +149,18 @@ const actions = {
 
   updateVisitedView({ commit }, view) {
     commit('UPDATE_VISITED_VIEW', view)
+  },
+
+  // 移除当前页面
+  delCurrentView({ commit, state }, params) {
+    const { view, $router } = params
+    commit('DEL_VISITED_VIEW', view)
+    const latestView = [...state.visitedViews].slice(-1)[0]
+    if (latestView) {
+      $router.push(latestView)
+    } else {
+      $router.push('/')
+    }
   }
 }
 
