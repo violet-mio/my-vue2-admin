@@ -35,7 +35,8 @@ import {
   Message,
   Row,
   InputNumber,
-  Upload
+  Upload,
+  Card
 } from 'element-ui'
 
 // 设置语言
@@ -75,6 +76,7 @@ Vue.use(Tree)
 Vue.use(Row)
 Vue.use(InputNumber)
 Vue.use(Upload)
+Vue.use(Card)
 
 // Vue.use(Loading.directive)
 

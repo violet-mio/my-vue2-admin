@@ -1,0 +1,79 @@
+{
+	"详情页面组件": {
+		"scope": "vue",
+		"prefix": "view-comp",
+		"body": [
+			"<template>"
+			"\t<div class='app-container'>"
+
+			"\t\t<el-form ref='postFormRef' :model='postForm' label-width='120px' label-suffix='：'>"
+
+			"\t\t\t<el-card>"
+			"\t\t\t\t<div slot='header'>基本信息</div>"
+
+			"\t\t\t\t<el-form-item label='名称'>"
+			"\t\t\t\t\t<span>{{ postForm.name }}</span>"
+			"\t\t\t\t</el-form-item>\n"
+
+			"\t\t\t</el-card>\n"
+
+			"\t\t</el-form>"
+
+			"\t</div>"
+			"</template>\n"
+
+			"<script>"
+			"const _cloneDeep = require('lodash/cloneDeep')"
+			"import { isEmpty } from '@/utils'"
+
+			"const defaultPostForm = {"
+			"\tname: ''"
+			"}\n"
+
+			"export default {"
+			"\tname: '${1:defaultVal}',"
+			"\tprops: {"
+			"\t},"
+
+			"\tdata() {"
+			"\t\treturn {"
+			"\t\t\tpostForm: _cloneDeep(defaultPostForm)"
+			"\t\t}"
+			"\t},"
+
+			"\tcreated() {"
+			"\t\tconst id = this.\\$route.query.id"
+			"\t\tthis.postForm.id = id"
+			"\t\tthis.getDetail(this.postForm.id).then(() => {"
+			"\t\t\tPromise.all(["
+			"\t\t\t\t// 请求一些选项"
+			"\t\t\t])"
+			"\t\t})"
+			"\t},"
+
+			"\tmethods: {"
+			"\t\tgetDetail(id) {"
+			"\t\t\treturn new Promise((resolve, reject) => {"
+			"\t\t\t\tgetDetail(id)"
+			"\t\t\t\t\t.then(res => {"
+			"\t\t\t\t\t\tthis.postForm = _cloneDeep(Object.assign(this.postForm, res.data))"
+			"\t\t\t\t\t\tresolve(res.data)"
+			"\t\t\t\t\t})"
+			"\t\t\t\t\t.catch(err => {"
+			"\t\t\t\t\t\tconsole.log(err)"
+			"\t\t\t\t\t\treject(err)"
+			"\t\t\t\t\t})"
+			"\t\t\t})"
+			"\t\t}"
+			"\t}"
+			"}"
+
+			"</script>"
+
+			"<style lang='scss' scoped>"
+			"</style>"
+			""
+		],
+		"description": "详情页面组件"
+	}
+}
