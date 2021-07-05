@@ -40,7 +40,6 @@
 
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleGoDetail(scope.row.id)">详情</el-button>
           <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
         </template>
       </el-table-column>
@@ -70,11 +69,6 @@ export default {
   created() {
     this.getList()
   },
-  activated() {
-    if (this.$route.query.flush) {
-      this.getList()
-    }
-  },
   methods: {
     getList() {
       this.listLoading = true
@@ -95,11 +89,10 @@ export default {
       this.handleSearch()
     },
     handleAdd() {
-      console.log('add')
-      this.$router.push({ name: 'AddGoods' })
+      this.$router.push({ name: 'AddComplexForm' })
     },
     handleEdit(id) {
-      this.$router.push({ name: 'EditGoods', query: { id }})
+      this.$router.push({ name: 'EditComplexForm', query: { id }})
     }
   }
 }

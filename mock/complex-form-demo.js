@@ -22,7 +22,7 @@ const adTypeList = [
 ]
 
 // 广告规格
-const adSpec = [
+const adSpecList = [
   { type_id: 1, spec_id: 1, spec_name: '图片' },
   { type_id: 2, spec_id: 2, spec_name: '信息流大图' },
   { type_id: 2, spec_id: 3, spec_name: '信息流小图' },
@@ -35,7 +35,7 @@ const adSpec = [
 // 生成一项APP
 function generateOneComplexForm() {
   const adTypeItem = getArrRandomItem(adTypeList)
-  const adSpecItem = adSpec.find(v => v.type_id === adTypeItem.type_id) || { spec_id: '', spec_name: '' }
+  const adSpecItem = adSpecList.find(v => v.type_id === adTypeItem.type_id) || { spec_id: '', spec_name: '' }
 
   return Mock.mock({
     id: '@increment',
@@ -84,6 +84,90 @@ module.exports = [
         data: {
           total: pageList.length,
           items: pageList
+        }
+      }
+    }
+  },
+  {
+    url: /\/complex-form-demo\/detail/,
+    type: 'get',
+    response: config => {
+      const { id } = config.query
+      let detail = ''
+      for (const item of complexFormDemoList) {
+        if (+item.id === +id) {
+          detail = item
+        }
+      }
+
+      return {
+        code: SUCCESS_CODE,
+        data: detail
+      }
+    }
+  },
+  {
+    url: /\/complex-form-demo\/add/,
+    type: 'post',
+    response: config => {
+      const body = config.body
+      const baseForm = generateOneComplexForm()
+      const item = Object.assign(baseForm, body)
+      item.type_name = adTypeList.find(v => v.type_id === item.type_id).type_name
+      item.spec_name = adSpecList.find(v => v.spec_id === item.spec_id).spec_name
+      complexFormDemoList.unshift(item)
+
+      return {
+        code: SUCCESS_CODE,
+        data: 'success'
+      }
+    }
+  },
+  {
+    url: /\/complex-form-demo\/update/,
+    type: 'put',
+    response: config => {
+      const body = config.body
+      let index = ''
+      const item = complexFormDemoList.find((item, i) => {
+        if (item.id === +body.id) {
+          index = i
+          return item
+        }
+      })
+      const updateItem = Object.assign(item, body)
+      updateItem.type_name = adTypeList.find(v => v.type_id === updateItem.type_id).type_name
+      updateItem.spec_name = adSpecList.find(v => v.spec_id === updateItem.spec_id).spec_name
+      complexFormDemoList.splice(index, 1, updateItem)
+
+      return {
+        code: SUCCESS_CODE,
+        data: 'success'
+      }
+    }
+  },
+  {
+    url: /\/complex-form-demo\/adtype\/options/,
+    type: 'get',
+    response: () => {
+      return {
+        code: SUCCESS_CODE,
+        data: {
+          list: { ...adTypeList }
+        }
+      }
+    }
+  },
+  {
+    url: /\/complex-form-demo\/adspec\/options/,
+    type: 'get',
+    response: config => {
+      const { type_id } = config.query
+      const specOptions = adSpecList.filter(v => v.type_id === +type_id)
+      return {
+        code: SUCCESS_CODE,
+        data: {
+          list: specOptions
         }
       }
     }

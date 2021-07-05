@@ -68,6 +68,10 @@ const getArrRandomItem = (arr) => {
   }
 }
 
+const getNumberAtUrl = (url) => {
+  return url.replace(/[^\d]/g, '') || ''
+}
+
 module.exports = {
   param2Obj,
   parsePath,
@@ -76,5 +80,6 @@ module.exports = {
   getArrRandomCount,
   getArrRandomItem,
   SUCCESS_CODE,
-  ERROR_CODE
+  ERROR_CODE,
+  getNumberAtUrl
 }
