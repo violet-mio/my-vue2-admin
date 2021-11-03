@@ -6,13 +6,15 @@ const table = require('./table')
 const goods = require('./goods')
 const multiSelect = require('./multi-select')
 const complexFormDemo = require('./complex-form-demo')
+const workbenchDemo = require('./workbench')
 
 const mocks = [
   ...user,
   ...table,
   ...goods,
   ...multiSelect,
-  ...complexFormDemo
+  ...complexFormDemo,
+  ...workbenchDemo
 ]
 
 // for front mock
