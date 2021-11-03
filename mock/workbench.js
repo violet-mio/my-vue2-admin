@@ -4,7 +4,6 @@ const Random = Mock.Random
 const news = ((len = 50) => {
   const list = []
   for (let i = 0; i < len; i++) {
-    // const name = Random.cname()
     list.push(Mock.mock({
       id: '@increment',
       avatar: Random.dataImage('100x100', Random.cname()),
@@ -20,7 +19,6 @@ module.exports = [
     url: /\/workbench\/news/,
     type: 'get',
     response: config => {
-      console.log('config', config)
       return {
         code: 20000,
         data: {
