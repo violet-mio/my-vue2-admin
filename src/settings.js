@@ -3,7 +3,7 @@ const isUseMock = true
 
 module.exports = {
 
-  title: 'my-admin',
+  title: 'my-vue2-admin',
 
   /**
    * @type {boolean} true | false

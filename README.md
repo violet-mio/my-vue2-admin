@@ -1,4 +1,4 @@
-## my-admin
+## my-vue2-admin
 
 基于开源项目**vue-admin-template**的分支[permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)，根据自身需求，摘取[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)的部分功能模块
 
@@ -14,10 +14,10 @@
 
 ```bash
 # 克隆项目
-git clone https://gitee.com/violet-mio/my-admin.git
+git clone git@github.com:violet-mio/my-vue2-admin.git
 
 # 进入项目目录
-cd my-admin
+cd my-vue2-admin
 
 # 安装依赖
 npm install
