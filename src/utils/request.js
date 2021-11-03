@@ -4,6 +4,7 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { printSuccess, printError } from '@/utils/print'
 
+const _Message = Message
 const isDev = process.env.NODE_ENV !== 'production'
 
 // 创建axios实例
@@ -43,7 +44,7 @@ service.interceptors.response.use(
 
     // 自定义状态码不是20000，认为请求异常
     if (res.code !== 20000) {
-      Message({
+      _Message({
         message: res.message || 'Error',
         type: 'error',
         duration: 5000
@@ -75,8 +76,8 @@ service.interceptors.response.use(
     }
   },
   error => {
-    isDev && printError(`${error.config.method} ${error.config.url}`, error)
-    Message({
+    // isDev && printError(`${error.config.method} ${error.config.url}`, error)
+    _Message({
       message: error.message,
       type: 'error',
       duration: 5000
