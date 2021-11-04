@@ -7,7 +7,12 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v1
-    - name: Mirror Github to Gitee
+
+    - name: Generate repo list # 自动获取仓库名
+      id: repo
+      uses: yi-Xu-0100/repo-list-generator@v1.0.0
+
+    - name: Mirror Github to Gitee with cache and list
       uses: Yikun/hub-mirror-action@master
       with:
         src: github/violet-mio #源端账户名
@@ -15,7 +20,8 @@ jobs:
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
         # Only sync normal repo
-        white_list: 'my-vue2-admin,my-newbee-admin,my-vue3-adminy'
+        static_list: '${{ steps.repo.outputs.repoList }}'
+        cache_path: /github/workspace/hub-mirror-cache
         force_update: true
         debug: true
 
