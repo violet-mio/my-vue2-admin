@@ -1,6 +1,3 @@
-// 是否使用mock
-const isUseMock = true
-
 module.exports = {
 
   title: 'my-vue2-admin',
@@ -24,7 +21,7 @@ module.exports = {
   tagsView: true,
   /**
    * @type {boolean} true | false
-   * @description 是否使用mock, 只在开发环境使用
+   * @description 是否使用mock
    */
-  isUseMock: process.env.NODE_ENV === 'development' && isUseMock
+  isUseMock: true
 }
