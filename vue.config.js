@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template' // page title
+const name = defaultSettings.title || 'my-vue2-admin' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -17,20 +17,22 @@ const port = process.env.port || process.env.npm_config_port || 9528 // 开发�
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-  /** 
+  /**
    * 部署应用时的基本URL，一般使用 '/'
    * 如果你部署在站点的子路径下，需要设置publicPath属性
-   * 比如你打算部署项目到站点 https://foo.github.io/test/ ，子路径就是/bar/，需要 publicPath设置为'/test/'
+   * 比如你打算部署项目到站点 https://foo.github.io/test/ ，子路径就是/test/，需要 publicPath设置为'/test/'
    * 更多参考 https://cli.vuejs.org/config/#publicpath
   */
-  // publicPath: '/',
-  publicPath: '/',
+  // production模式下使用子路径/my-vue2-admin-preview/，其它development模式和staging模式使用'/'
+  publicPath: process.env.VUE_MODE === 'production'
+    ? '/my-vue2-admin-preview/'
+    : '/',
 
   // 构建文件的存放目录
   outputDir: 'dist',
 
   // 编译后，静态资源存放目录
-  assetsDir: 'static', 
+  assetsDir: 'static',
 
   // eslint 是否在保存时候进行检查，如果你只想在开发环境时使用，可以用如下配置
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -48,7 +50,7 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
-    },
+    }
     // 代理设置，可以用于开发阶段处理跨域请求
     // proxy: {}
     // proxy: {
@@ -62,7 +64,7 @@ module.exports = {
     //     }
     //   }
     // },
-    
+
     // 使用mock数据
     // before: defaultSettings.isUseMock ? require('./mock/mock-server.js') : () =>{}
   },
@@ -82,7 +84,7 @@ module.exports = {
     // 参考issues https://github.com/PanJiaChen/vue-element-admin/issues/2690
     // 移除预加载
     config.plugins.delete('preload')
-  
+
     // 移除 prefetch 插件，减少首屏加载
     config.plugins.delete('prefetch')
 
@@ -143,9 +145,9 @@ module.exports = {
                   // 将elementui拆分到一个单独的包中
                   name: 'chunk-elementUI',
                   // 权重要大于 libs 和 app, 不然会被打包进 libs 或者 app
-                  priority: 20, 
+                  priority: 20,
                   // 为了适配cnpm
-                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ 
+                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/
                 },
                 commons: {
                   name: 'chunk-commons',
