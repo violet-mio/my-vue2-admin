@@ -1,16 +1,21 @@
 on: push
-name: Tests / test-user-mirror
+name: Tests / test-org-mirror
 jobs:
   run:
     name: Run
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout source code
+      uses: actions/checkout@v1
     - name: Mirror Github to Gitee
-      uses: Yikun/hub-mirror-action@master #使用Yikun开发的hub-mirror-action@v1.0
+      uses: ./.
       with:
         src: github/violet-mio #源端账户名
         dst: gitee/violet-mio #目的端账户名
-        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }} #SSH密钥对中的私钥，即 id_rsa
-        dst_token:  ${{ secrets.GITEE_TOKEN }} #Gitee账户的私人令牌
-        account_type: user #默认为user，可以设置为org（组织）或者user（用户）
-	white_list: "my-vue2-admin,my-newbee-admin,my-vue3-admin" 
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token: ${{ secrets.GITEE_TOKEN }}
+        # Only sync normal repo
+        white_list: 'my-vue2-admin,my-newbee-admin,my-vue3-adminy'
+        force_update: true
+        debug: true
+
