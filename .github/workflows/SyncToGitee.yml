@@ -23,7 +23,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-${{ steps.info.outputs.time }}
         restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
 
-    - name: Mirror Github to Gitee with cache and list
+    - name: Mirror Github to Gitee with cache
       uses: Yikun/hub-mirror-action@master
       with:
         src: github/violet-mio #源端账户名
