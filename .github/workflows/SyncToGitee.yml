@@ -1,0 +1,38 @@
+on: push
+name: Tests / test-org-mirror
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Get repo and time
+      id: info
+      uses: actions/github-script@v3.1
+      with:
+        result-encoding: string
+        script: |
+          core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
+          core.setOutput('key', `${context.repo.owner}-${context.repo.repo}`);
+          return context.repo.repo;
+    - name: Cache src repos
+      uses: actions/cache@v2.1.3
+      id: cache
+      with:
+        path: ${{ github.workspace }}/hub-mirror-cache
+        key: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-${{ steps.info.outputs.time }}
+        restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
+
+    - name: Mirror Github to Gitee with cache
+      uses: Yikun/hub-mirror-action@master
+      with:
+        src: github/violet-mio #源端账户名
+        dst: gitee/violet-mio #目的端账户名
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token: ${{ secrets.GITEE_TOKEN }}
+        # Only sync normal repo
+        static_list: '${{ steps.info.outputs.result }}'
+        cache_path: /github/workspace/hub-mirror-cache
+        force_update: true
+        debug: true
+
