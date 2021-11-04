@@ -8,7 +8,7 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v1
     - name: Mirror Github to Gitee
-      uses: ./.
+      uses: Yikun/hub-mirror-action@master
       with:
         src: github/violet-mio #源端账户名
         dst: gitee/violet-mio #目的端账户名
