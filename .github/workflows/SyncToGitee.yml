@@ -13,6 +13,4 @@ jobs:
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }} #SSH密钥对中的私钥，即 id_rsa
         dst_token:  ${{ secrets.GITEE_TOKEN }} #Gitee账户的私人令牌
         account_type: user #默认为user，可以设置为org（组织）或者user（用户）
-        force_update: true
-        debug: true #默认为false, 配置后，启用debug开关，会显示所有执行命令
-	      white_list: "my-vue2-admin,my-newbee-admin,my-vue3-admin" 
+	white_list: "my-vue2-admin,my-newbee-admin,my-vue3-admin" 
