@@ -31,9 +31,10 @@
       <el-table
         :ref="`subTable-${selItem.id}`"
         :data="selItem.children"
+        row-key="code"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="onSubSelectChange"
+        @selection-change="(val) => onSubSelectChange(val, selItem)"
       >
         <el-table-column
           type="selection"
@@ -68,7 +69,7 @@ export default {
     return {
       list: [],
       selectedList: [],
-      selectedSubList: [],
+      selectedSubObj: {},
       pageLoading: false
     }
   },
@@ -77,32 +78,48 @@ export default {
   },
   methods: {
     // 子表格选择
-    onSubSelectChange(val) {
+    onSubSelectChange(val, selItem) {
       console.log('onSubSelectChange', val)
-      this.selectedSubList = val
+      // 每个子表格分别存储
+      if (this.selectedSubObj[selItem.id]) {
+        this.selectedSubObj[selItem.id] = val
+      } else {
+        this.selectedSubObj[selItem.id] = [...val]
+      }
     },
     // 主表格选择
     onSelectionChange(val) {
       console.log('onSelectionChange', val)
-      if (val.length === 0) {
-        this.selectedList = []
-        return
-      }
       // 数据从原数据，避免顺序错乱
       const ids = val.map(item => item.id)
       this.selectedList = this.list.filter(item => ids.includes(item.id))
-      // this.selectedList = val
       if (this.selectedList.length > 0) {
         this.$nextTick(() => {
-          const keys = this.selectedList.map(item => `subTable-${item.id}`)
-          console.log('keys', keys)
-          keys.forEach(key => {
-            const el = this.$refs[key]
-            // 之前已经勾选过的，不再勾选
-            if (el && el[0].selection.length === 0) {
-              el && el[0].toggleAllSelection()
-            } else {
-              console.log('已经勾选过的，不再勾选')
+          // 更新selectedSubObj，如果某一项主表格被取消勾选，移除selectedSubObj中的数据
+          if (Object.keys(this.selectedSubObj).length) {
+            const ids = this.selectedList.map(item => item.id)
+            for (const parentId in this.selectedSubObj) {
+              console.log('selectedSubObj parentId', parentId)
+              console.log('ids', ids)
+              // 如果selectedSubObj中的key不在ids中，移除
+              // 注意selectedSubObj的键是字符串，ids里面是数字, 所以要转换
+              if (!ids.includes(+parentId)) {
+                delete this.selectedSubObj[parentId]
+              }
+            }
+          }
+
+          // 处理子表格选中
+          this.selectedList.forEach(parent => {
+            const refName = `subTable-${parent.id}`
+            const subTableEl = this.$refs[refName]
+            // 如果子表格没有选中项，且selectedSubObj中没有该项，全选
+            if (subTableEl && subTableEl[0].selection.length === 0) {
+              const exist = this.selectedSubObj[parent.id]
+              const isSelAll = subTableEl && subTableEl[0] && !exist
+              if (isSelAll) {
+                subTableEl[0].toggleAllSelection()
+              }
             }
           })
         })
