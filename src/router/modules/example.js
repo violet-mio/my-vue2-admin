@@ -17,6 +17,12 @@ export default {
       meta: { title: 'Table', icon: 'table' }
     },
     {
+      path: 'select-table',
+      name: 'SelectTable',
+      component: () => import('@/views/table/select-table'),
+      meta: { title: 'SelectTable', icon: 'table', noCache: true }
+    },
+    {
       path: 'tree',
       name: 'Tree',
       component: () => import('@/views/tree/index'),
