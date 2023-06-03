@@ -123,6 +123,8 @@ export default {
             }
           })
         })
+      } else {
+        this.selectedSubObj = {}
       }
     },
     getList() {
